@@ -29,12 +29,7 @@ dependencies {
     implementation 'junit:junit:4.13.1'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-
-    //rest api setting
-    //implementation 'org.springframework.boot:spring-boot-starter-data-rest'
-    //implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui 2.0.2'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas:2.6.6'
-    //implementation 'org.springframework.data:spring-data-rest-hal-explorer'
 
     //Data validation chk
     implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.4'
@@ -45,14 +40,42 @@ dependencies {
 
     //DB
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    //querydsl 설정 추가
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
     //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     //Json
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    //thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'         // Thymeleaf Template
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'   // Thymeleaf layout
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// [1] Querydsl 설정부
+def generated = 'src/main/generated'
+
+// [2] querydsl QClass 파일 생성 위치를 지정
+tasks.withType(JavaCompile) {
+    options.getGeneratedSourceOutputDirectory().set(file(generated))
+}
+
+// [3] java source set 에 querydsl QClass 위치 추가
+sourceSets {
+    main.java.srcDirs += [ generated ]
+}
+
+// [4] gradle clean 시에 QClass 디렉토리 삭제
+clean {
+    delete file(generated)
+}
+

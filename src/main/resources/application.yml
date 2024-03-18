@@ -21,3 +21,9 @@ logging:
 
 json:
   path: /upload/data/
+
+  thymeleaf:
+    enabled: true
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
