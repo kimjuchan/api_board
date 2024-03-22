@@ -19,7 +19,7 @@ public class MainController {
     @GetMapping("/index")
     public String indexPage(){
         //index page 호출하면서 필요한 데이터 insert 진행.
-        return "/view/main/index";
+        return "view/main/index";
     }
 
 }

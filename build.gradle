@@ -52,6 +52,9 @@ dependencies {
     //Json
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 
+    //swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
     //thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'         // Thymeleaf Template
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'   // Thymeleaf layout

@@ -14,6 +14,10 @@ public class QuerydslConfig {
 
     @Bean
     public JPAQueryFactory jpaQueryFactory(){
+        //실행 순서 test
+        System.out.println("##QuerydlsConfig setting....");
+
+
         return new JPAQueryFactory(entityManager);
     }
 }

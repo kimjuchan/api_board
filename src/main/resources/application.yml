@@ -27,3 +27,8 @@ json:
     cache: false
     prefix: classpath:/templates/
     suffix: .html
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
