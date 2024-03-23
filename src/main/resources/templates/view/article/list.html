@@ -8,21 +8,6 @@
 >
 <head>
     <title>테스트 페이지 </title>
-
-    <!-- inline CSS 영역-->
-    <style th:inline="css" type="text/css">
-        body {
-            margin: 30px;
-            border: 1px solid red;
-        }
-    </style>
-
-    <!-- inline JS 영역-->
-    <script th:inline="javascript" type="text/javascript">
-        $(document).ready(() => {
-            alert("페이지가 시작됩니다.")
-        });
-    </script>
 </head>
 
 <body>
@@ -36,16 +21,19 @@
                             <div class="result-header">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div class="records">Showing: <b>1-20</b> of <b>200</b> result</div>
+                                        <!--조회 목록이 있을 경우 노출-->
+                                        <th:block th:if="${list.getTotalElements() > 0}">
+                                            <div class="records">총 : <b><th:block th:if="${list.getTotalElements() > 0}">[[${list.getTotalElements()}]]</th:block></b> 건</div>
+                                        </th:block>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="result-actions">
                                             <div class="result-sorting">
-                                                <span>Sort By:</span>
-                                                <select class="form-control border-0" id="exampleOption">
-                                                    <option value="1">Relevance</option>
-                                                    <option value="2">Names (A-Z)</option>
-                                                    <option value="3">Names (Z-A)</option>
+                                                <span>정렬 :</span>
+                                                <select class="form-control border-0" id="">
+                                                    <option value="1">타이틀 기준</option>
+                                                    <option value="2">등록자 기준</option>
+                                                    <option value="3">등록일 기준</option>
                                                 </select>
                                             </div>
                                             <div class="result-views">

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,24 +28,17 @@ public class ArticleController {
 
     private final ArticleServiceImpl articleService;
 
-
-    //2024.03.19
     //TODO :  Paging 처리 , 검색 조건 추가(dto,searchForm.html,Querydls)
     @GetMapping("/list")
-    public String getArticleList(Model mv, @PageableDefault(page=1) Pageable pageInfo){
+    public String getArticleList(Model mv, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageInfo){
+
         Page<ArticleView> articleViewList = articleService.findAll(pageInfo).map(ArticleView::entityToArticleVeiw);
+        PageUtil page = new PageUtil(pageInfo, (int) articleViewList.getTotalElements(),articleViewList.getTotalPages());
 
-        log.info("total page : " + articleViewList.getTotalPages());
-        log.info("total page : " + articleViewList.getTotalElements());
-        log.info("total page : " + articleViewList.getSize());
-        log.info("total page : " + articleViewList.getNumber());
-
-        PageUtil page = new PageUtil(pageInfo, (int) articleViewList.getTotalElements());
+        //page index 값은 0부터 시작이고   해당 현재 요청 page 값은 1부터 시작임.
 
         mv.addAttribute("list" , articleViewList);
         mv.addAttribute("pageUtil" , page);
-
-        //log.info("totalCnt :: " + articleViewList.getTotalElements())
 
         return "view/article/list";
     }

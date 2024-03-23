@@ -7,20 +7,25 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Function;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 public class PageUtil {
-
+    //페이지 정렬 타입
     public static final String DEFAULT_SORT_TYPE = "id";
-    private static final String DEFAULT_PAGE_NUM = "0";
+    //페이지 넘버
+    private static final String DEFAULT_PAGE_NUM = "1";
+    //페이지 당 데이터 목록 수
     private static final String DEFAULT_PAGE_SIZE = "10";
-
     //페이지 목록에 수 ( 1p... 5p , 6p...10p)
     private static int PER_PAGE_SIZE = 5;
 
@@ -46,32 +51,17 @@ public class PageUtil {
 
     private int nowPage;
 
-    public PageUtil(Pageable pageable, int totalCount) {
-        this.page = pageable.getPageNumber() < 0 ? NumberUtils.toInt(DEFAULT_PAGE_NUM) : pageable.getPageNumber();
+    private int totalPage;
+
+    public PageUtil(Pageable pageable, int totalCount, int totalPage) {
+        this.page = pageable.getPageNumber() < 0 ? NumberUtils.toInt(DEFAULT_PAGE_NUM) : pageable.getPageNumber() + 1;
         this.size = pageable.getPageSize() < 0 ? NumberUtils.toInt(DEFAULT_PAGE_SIZE) : pageable.getPageSize();
         this.sort_type = DEFAULT_SORT_TYPE;
-        this.startPage = (((int) Math.ceil(((double) pageable.getPageNumber() / PER_PAGE_SIZE))) - 1) * PER_PAGE_SIZE + 1;
+        this.startPage = (((int) Math.ceil(((double) (pageable.getPageNumber()+1)/ PER_PAGE_SIZE))) - 1) * PER_PAGE_SIZE + 1;
         this.endPage = Math.min((startPage + PER_PAGE_SIZE - 1), totalCount);
         this.totalCnt = totalCount;
-        this.nowPage = pageable.getPageNumber();
+        this.nowPage = pageable.getPageNumber() + 1;
+        this.totalPage = totalPage;
     }
-
-
-    public int getSize() {
-        return this.size < 1 ? 1 : this.size;
-    }
-
-
-    //return 타입 확인 필요
-    public PageRequest toPageable() {
-        return PageRequest.of(this.page, getSize());
-    }
-
-    public PageRequest toPageableWithSort(Sort sort) {
-        return PageRequest.of(this.page, getSize(), sort);
-    }
-
-
-
 
 }
