@@ -34,9 +34,7 @@ public class ArticleController {
 
         Page<ArticleView> articleViewList = articleService.findAll(pageInfo).map(ArticleView::entityToArticleVeiw);
         PageUtil page = new PageUtil(pageInfo, (int) articleViewList.getTotalElements(),articleViewList.getTotalPages());
-
         //page index 값은 0부터 시작이고   해당 현재 요청 page 값은 1부터 시작임.
-
         mv.addAttribute("list" , articleViewList);
         mv.addAttribute("pageUtil" , page);
 
