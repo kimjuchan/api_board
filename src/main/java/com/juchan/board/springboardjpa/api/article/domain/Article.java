@@ -40,9 +40,7 @@ public class Article extends BaseEntitiy {
     @Setter
     private String hashtag;
 
-    @OrderBy("id")
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-    //중복 허용 x And LikedHashSet을 통해서 순서보장. -> List 변경
     private final List<ArticleComment> articleComments = new ArrayList<>();
 
     //모든 엔티티 컬럼을 비교할 필요없시 pk 기반으로만 확인해도 충분함.

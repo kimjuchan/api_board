@@ -6,6 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 @Configuration
 public class QuerydslConfig {
 
@@ -16,8 +17,6 @@ public class QuerydslConfig {
     public JPAQueryFactory jpaQueryFactory(){
         //실행 순서 test
         System.out.println("##QuerydlsConfig setting....");
-
-
         return new JPAQueryFactory(entityManager);
     }
 }

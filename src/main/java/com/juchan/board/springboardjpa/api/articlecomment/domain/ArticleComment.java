@@ -23,7 +23,7 @@ public class ArticleComment extends BaseEntitiy {
     private Long id;
 
     @Setter
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     //만약 조인컬럼 id(외래키) 매핑 안해주면 article_article_id 새로운 외래키가 생성됨...
     @JoinColumn(name = "article_id")
     private Article article;

@@ -2,11 +2,13 @@ package com.juchan.board.springboardjpa.api.article.dto;
 
 
 import com.juchan.board.springboardjpa.api.article.domain.Article;
+import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 //화면으로 제공 되는 article vo 역할
@@ -20,9 +22,11 @@ public class ArticleView {
     private String content;
     private String hashtag;
     private LocalDateTime createdAt;
-    private String createBy;
+    private String createdBy;
     private LocalDateTime updatedAt;
-    private String updateBy;
+    private String updatedBy;
+
+    private List<ArticleComment> articleComment;
 
     //change Article to ArticleView
     public static ArticleView entityToArticleVeiw(Article article){
@@ -32,9 +36,10 @@ public class ArticleView {
                     .content(article.getContent())
                     .hashtag(article.getHashtag())
                     .createdAt(article.getCreatedAt())
-                    .createBy(article.getCreateBy())
+                    .createdBy(article.getCreateBy())
                     .updatedAt(article.getUpdatedAt())
-                    .updateBy(article.getUpdateBy())
+                    .updatedBy(article.getUpdateBy())
+                    .articleComment(article.getArticleComments())
                     .build();
     }
 

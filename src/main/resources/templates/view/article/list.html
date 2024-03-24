@@ -26,57 +26,35 @@
                                             <div class="records">총 : <b><th:block th:if="${list.getTotalElements() > 0}">[[${list.getTotalElements()}]]</th:block></b> 건</div>
                                         </th:block>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="result-actions">
-                                            <div class="result-sorting">
-                                                <span>정렬 :</span>
-                                                <select class="form-control border-0" id="">
-                                                    <option value="1">타이틀 기준</option>
-                                                    <option value="2">등록자 기준</option>
-                                                    <option value="3">등록일 기준</option>
-                                                </select>
-                                            </div>
-                                            <div class="result-views">
-                                                <button type="button" class="btn btn-soft-base btn-icon">
-                                                    <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="24"
-                                                            height="24"
-                                                            viewBox="0 0 24 24"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            stroke-width="2"
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            class="feather feather-list"
-                                                    >
-                                                        <line x1="8" y1="6" x2="21" y2="6"></line>
-                                                        <line x1="8" y1="12" x2="21" y2="12"></line>
-                                                        <line x1="8" y1="18" x2="21" y2="18"></line>
-                                                        <line x1="3" y1="6" x2="3" y2="6"></line>
-                                                        <line x1="3" y1="12" x2="3" y2="12"></line>
-                                                        <line x1="3" y1="18" x2="3" y2="18"></line>
-                                                    </svg>
-                                                </button>
-                                                <button type="button" class="btn btn-soft-base btn-icon">
-                                                    <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="24"
-                                                            height="24"
-                                                            viewBox="0 0 24 24"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            stroke-width="2"
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                            class="feather feather-grid"
-                                                    >
-                                                        <rect x="3" y="3" width="7" height="7"></rect>
-                                                        <rect x="14" y="3" width="7" height="7"></rect>
-                                                        <rect x="14" y="14" width="7" height="7"></rect>
-                                                        <rect x="3" y="14" width="7" height="7"></rect>
-                                                    </svg>
-                                                </button>
+                                    <div class="row">
+                                        <div class="col-lg-12 card-margin">
+                                            <div class="card search-form">
+                                                <div class="card-body p-0">
+                                                    <form id="search-form">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <form th:method="get" th:action>
+                                                                    <div class="row no-gutters">
+                                                                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                                                            <select class="form-control border-0" id="searchType" name="type">
+                                                                                <option th:each="search : ${searchDto.typeList}" th:text="${search.type}" th:if="${searchDto.type eq search.type ? 'selected' : ''}" th:value="${search.name}">
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-lg-8 col-md-6 col-sm-12 p-0">
+                                                                            <input type="text" placeholder="검색 내용 입력" class="form-control" id="keyword" name="keyword"><a th:if="${searchDto.keyword != null}" th:value="${searchDto.keyword}"></a>
+                                                                        </div>
+                                                                        <div class="col-lg-1 col-md-3 col-sm-12 p-0">
+                                                                            <button type="submit" class="btn btn-base">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -84,7 +62,7 @@
                             </div>
                             <div class="result-body">
                                 <div class="table-responsive">
-                                    <th:block th:if="${list.getTotalElements() > 0}">
+                                    <th:block th:if="${list != null}">
                                         <table class="table widget-26">
                                             <tr th:each="article : ${list.content}">
                                                 <td>
@@ -94,8 +72,10 @@
                                                 </td>
                                                 <td>
                                                     <div class="widget-26-job-title">
-                                                        <a href="#">[[${article.title}]]</a>
-                                                        <p class="m-0"><a href="#" class="employer-name">Axiom Corp.</a> <span class="text-muted time">1 days ago</span></p>
+                                                        <a th:href="@{'/article/detail/' + ${article.id} }" >[[${article.title}]]</a>
+                                                        <!--만약 querystring 형태로 전달하고 싶으면->
+                                                        <!--<a th:href="@{/article/detail(id=${article.id})}" >[[${article.title}]]</a>-->
+                                                        <p class="m-0"><a class="employer-name">[[${article.createdBy}]]</a></p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -107,20 +87,20 @@
                                                 <td>
                                                     <div class="widget-26-job-info">
                                                         <p class="type m-0"</p>
-                                                        <p class="text-muted m-0">in <span class="location">[[${article.hashtag}]]</span></p>
+                                                        <p class="text-muted m-0"><span class="location">[[${article.hashtag}]]</span></p>
                                                     </div>
                                                 </td>
 
                                                 <td>
                                                     <div class="widget-26-job-category bg-soft-base">
                                                         <i class="indicator bg-base"></i>
-                                                        <span>[[${article.createBy}]]</span>
+                                                        <span>[[${article.createdBy}]]</span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="widget-26-job-category bg-soft-base">
                                                         <i class="indicator bg-base"></i>
-                                                        <span>[[${article.updateBy}]]</span>
+                                                        <span>[[${article.updatedBy}]]</span>
                                                     </div>
                                                 </td>
                                             </tr>
