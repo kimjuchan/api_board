@@ -22,9 +22,9 @@ public class ArticleView {
     private String content;
     private String hashtag;
     private LocalDateTime createdAt;
-    private String createdBy;
+    private String createBy;
     private LocalDateTime updatedAt;
-    private String updatedBy;
+    private String updateBy;
 
     private List<ArticleComment> articleComment;
 
@@ -36,9 +36,9 @@ public class ArticleView {
                     .content(article.getContent())
                     .hashtag(article.getHashtag())
                     .createdAt(article.getCreatedAt())
-                    .createdBy(article.getCreateBy())
+                    .createBy(article.getCreateBy())
                     .updatedAt(article.getUpdatedAt())
-                    .updatedBy(article.getUpdateBy())
+                    .updateBy(article.getUpdateBy())
                     .articleComment(article.getArticleComments())
                     .build();
     }

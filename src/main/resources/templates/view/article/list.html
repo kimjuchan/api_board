@@ -75,7 +75,7 @@
                                                         <a th:href="@{'/article/detail/' + ${article.id} }" >[[${article.title}]]</a>
                                                         <!--만약 querystring 형태로 전달하고 싶으면->
                                                         <!--<a th:href="@{/article/detail(id=${article.id})}" >[[${article.title}]]</a>-->
-                                                        <p class="m-0"><a class="employer-name">[[${article.createdBy}]]</a></p>
+                                                        <p class="m-0"><a class="employer-name">[[${article.createBy}]]</a></p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -94,13 +94,13 @@
                                                 <td>
                                                     <div class="widget-26-job-category bg-soft-base">
                                                         <i class="indicator bg-base"></i>
-                                                        <span>[[${article.createdBy}]]</span>
+                                                        <span>[[${article.createBy}]]</span>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="widget-26-job-category bg-soft-base">
                                                         <i class="indicator bg-base"></i>
-                                                        <span>[[${article.updatedBy}]]</span>
+                                                        <span>[[${article.updateBy}]]</span>
                                                     </div>
                                                 </td>
                                             </tr>

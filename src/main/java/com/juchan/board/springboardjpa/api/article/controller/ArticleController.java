@@ -6,8 +6,6 @@ import com.juchan.board.springboardjpa.api.article.dto.ArticleView;
 import com.juchan.board.springboardjpa.api.article.service.ArticleServiceImpl;
 import com.juchan.board.springboardjpa.common.page.PageUtil;
 import com.juchan.board.springboardjpa.common.search.SearchDto;
-import com.juchan.board.springboardjpa.common.search.SearchType;
-import com.querydsl.core.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,10 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/article")
@@ -43,7 +37,7 @@ public class ArticleController {
         if(searchDto.getType().equals("ALL")){
             articleViewList = articleService.findAll(pageInfo).map(ArticleView::entityToArticleVeiw);
         }else{
-            //type에 따른 검색 조건 적용하여 목록 조회
+            //검색 조건 있을경우 목록 조회
             articleViewList = articleService.findAllBySearch(searchDto,pageInfo).map(ArticleView::entityToArticleVeiw);
         }
 
@@ -57,12 +51,10 @@ public class ArticleController {
     }
 
     @GetMapping("/detail/{id}")
-    public String getArticleById(@PathVariable("id") Long id, ModelAndView mv){
+    public String getArticleById(@PathVariable("id") Long id, Model mv){
         //id 기반 해당 정보 조회
         ArticleView articleView = ArticleView.entityToArticleVeiw(articleService.findById(id));
-        //해당 article id 기반 article_comment List 조회
-
-        mv.addObject("article",articleView);
+        mv.addAttribute("article",articleView);
         return "view/article/detail";
     }
 

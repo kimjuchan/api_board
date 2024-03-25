@@ -36,7 +36,6 @@ public class ArticleApiController {
         //service에서 이미 null chk 함 -> 정상적으로 넘어온다면 값이 무조건 있으니 더 이상 예외처리 안해돔 괜찮음.
         ArticleResponse response = ArticleResponse.of(articleService.findById(id));
         return ResponseEntity.ok(ApiResponse.create(response));
-
     }
 
     // create

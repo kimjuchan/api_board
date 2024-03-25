@@ -91,9 +91,6 @@ public class ArticleServiceImpl {
         //TODO : Server에서 예외처리 후 해당 error 정보를 화면에 노출 시켜야함
         //test
         Optional<Article> testList = articleRepository.findById(id);
-        ArticleComment testComment = testList.get().getArticleComments().get(0);
-
-
         return articleRepository.findById(id).orElseThrow(() -> new NoSuchDataException("error type : [[no data]]"));
     }
 }
