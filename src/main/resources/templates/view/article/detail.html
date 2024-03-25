@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:fragment="content">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-4">Article Info</h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form>
+                <div class="mb-3">
+                    <label for="title" class="form-label">title</label>
+                    <input type="text" class="form-control" id="title" name="title" th:value="${article.title}">
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">content</label>
+                    <textarea class="form-control" id="content" name="content">[[${article.content}]]</textarea>
+                </div>
+                <!--<div class="mb-3" th:if="${article.imageUrls != null}">
+                    <label class="form-label">Images</label>
+                    <div>
+                        <th:block th:each="imageUrl : ${article.imageUrls}">
+                            <img th:src="${imageUrl}" alt="Image" width="200px" height="200px">
+                        </th:block>
+                    </div>
+                </div>-->
+                <div class="mb-3">
+                    <label for="createdAt" class="form-label">작성일</label> <input
+                        type="text" class="form-control" id="createdAt" name="createdAt"
+                        th:value="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="writer" class="form-label">작성자</label> <input
+                        type="text" class="form-control" id="createBy" name="createBy"
+                        th:value="${article.createBy}" disabled>
+                </div>
+                <a href="/article/list" class="btn btn-outline-secondary">목록</a>
+
+                <a th:href="@{/article/${article.id}}" class="btn btn-outline-warning">수정</a>
+                <a th:href="@{/article/${article.id}}" class="btn btn-outline-danger" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+
+            </form>
+
+            <!-- Comments Form -->
+            <div class="card my-4">
+                <h5 class="card-header">댓글 ([[${article.articleComment.size}]])</h5>
+                <div class="card-body">
+                    <form th:action="@{/article/{article.id}}" th:method="post">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <input type="hidden" name="idx"/>
+                            <textarea name="content" class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">댓글 작성</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Display Comments -->
+            <div class="card my-4" th:if="${article.articleComment.size > 0}">
+                <h5 class="card-header">Comments:</h5>
+                <div class="card-body">
+                    <div th:each="comment : ${article.articleComment}">
+                        <div class="media mb-4">
+                            <div class="media-body">
+                                <div class="d-flex align-items-start">
+                                    <!--<img class="d-flex mr-3 rounded-circle" th:src="${comment.getImageUrl()}" alt="User image" width="50">-->
+                                    <div>
+                                        <h5 class="mt-0" th:text="${comment.createBy}"></h5>
+                                        <p th:text="${comment.content}" th:id="'comment-' + ${comment.id}"></p>
+                                        <small class="text-muted" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+     /*   const id = [[${id}]];*/
+        /*]]>*/
+    </script>
+</div>
+
+</body>
+</html>
