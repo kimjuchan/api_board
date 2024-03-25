@@ -11,7 +11,7 @@
     <h1 class="mt-4">Article Info</h1>
     <div class="card mb-4">
         <div class="card-body">
-            <form>
+            <form th:action="@{/article/update}" method="post">
                 <div class="mb-3">
                     <label for="title" class="form-label">title</label>
                     <input type="text" class="form-control" id="title" name="title" th:value="${article.title}">
@@ -20,6 +20,11 @@
                     <label for="content" class="form-label">content</label>
                     <textarea class="form-control" id="content" name="content">[[${article.content}]]</textarea>
                 </div>
+                <div class="mb-3">
+                    <label for="hashtag" class="form-label">hashtag</label>
+                    <textarea class="form-control" id="hashtag" name="hashtag">[[${article.hashtag}]]</textarea>
+                </div>
+
                 <!--<div class="mb-3" th:if="${article.imageUrls != null}">
                     <label class="form-label">Images</label>
                     <div>
@@ -38,10 +43,13 @@
                         type="text" class="form-control" id="createBy" name="createBy"
                         th:value="${article.createBy}" disabled>
                 </div>
-                <a href="/article/list" class="btn btn-outline-secondary">목록</a>
 
-                <a th:href="@{/article/${article.id}}" class="btn btn-outline-warning">수정</a>
-                <a th:href="@{/article/${article.id}}" class="btn btn-outline-danger" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+                <!--Article index 값 setting -->
+                <input type="hidden" id="commentId" name="commentId" th:value="${article.id}">
+                <a href="/article/list" class="btn btn-outline-secondary">목록</a>
+                <button type="submit" class="btn btn-outline-warning">수정</button>
+                <!--해당id 값 확인 -->
+                <a th:href="@{'/article/delete/' + ${article.id}}" class="btn btn-outline-danger" onclick="return confirm('삭제 하시겠습니까?')">삭제</a>
 
             </form>
 
@@ -49,7 +57,7 @@
             <div class="card my-4">
                 <h5 class="card-header">댓글 ([[${article.articleComment.size}]])</h5>
                 <div class="card-body">
-                    <form th:action="@{/article/{article.id}}" th:method="post">
+                    <form th:action="@{'/article/comment/create/' + ${article.id}}" th:method="post">
                         <div class="form-group" style="margin-bottom: 10px;">
                             <input type="hidden" name="idx"/>
                             <textarea name="content" class="form-control" rows="3"></textarea>
@@ -70,10 +78,12 @@
                                     <!--<img class="d-flex mr-3 rounded-circle" th:src="${comment.getImageUrl()}" alt="User image" width="50">-->
                                     <div>
                                         <h5 class="mt-0" th:text="${comment.createBy}"></h5>
-                                        <p th:text="${comment.content}" th:id="'comment-' + ${comment.id}"></p>
+                                        <textarea style="width: 700px;" type="text" th:text="${comment.content}" th:id="'comment-' + ${comment.id}"></textarea>
                                         <small class="text-muted" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></small>
                                     </div>
                                 </div>
+                                <button class="btn btn-sm btn-outline-warning" th:attr="data-id=${comment.getId()}" th:onclick="editComment('[[${article.id}]]')">수정</button>
+                                <a th:href="@{'/article/comment/delete/' + ${article.id} + '/comment/' + ${comment.id}}" class="btn btn-sm btn-outline-danger" onclick="return confirm('댓글을 삭제 하시겠습니까?')">삭제</a>
                             </div>
                         </div>
                     </div>
@@ -83,9 +93,19 @@
     </div>
 
     <script th:inline="javascript">
-        /*<![CDATA[*/
-     /*   const id = [[${id}]];*/
-        /*]]>*/
+        function editComment(id) {
+            const commentId = this.getAttribute('data-id');
+            const commentElement = document.getElementById('comment-' + commentId);
+            const commentContent = commentElement.textContent;
+
+            const newContent = prompt('Edit your comment:', commentContent);
+            if (newContent) {
+                $.post('/article/comment/update/'+ id +'/comment/' + commentId, {content: newContent}, function (data) {
+                    window.location.href = data;
+                });
+            }
+
+        }
     </script>
 </div>
 

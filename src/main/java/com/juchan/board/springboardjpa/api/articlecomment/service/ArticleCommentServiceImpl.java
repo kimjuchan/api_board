@@ -25,6 +25,7 @@ import java.util.Optional;
 public class ArticleCommentServiceImpl {
 
     private final ArticleCommentRepository articleCommentRepository;
+    private final ArticleRepository articleRepository;
 
     public Long create(ArticleCommentRequest request){
         //set
@@ -70,9 +71,32 @@ public class ArticleCommentServiceImpl {
         return articleCommentRepository.findById(id).orElseThrow(() -> new NoSuchDataException("error type : [[no data]]"));
     }
 
-    //Article Comment total size
-    public Long findTotalCnt(){
-        return articleCommentRepository.count();
+
+    //Article SSR 구성에서 사용되는 Method...
+    public void createByArticle(Long id,ArticleCommentRequest request){
+        //Article info set
+        Article article = articleRepository.findById(id).orElseThrow(() -> new NoSuchDataException("[" + id + "]에 매핑되는 정보가 없습니다."));
+
+        //set
+        ArticleComment articleComment = ArticleComment.builder()
+                .id(request.getArticle_id())
+                .content(request.getContent())
+                .article(article)
+                .build();
+
+        //save
+        articleCommentRepository.save(articleComment);
     }
+
+    public void updateByComment(Long cid, ArticleUpdateRequest request){
+
+        //set
+        ArticleComment articleComment = articleCommentRepository.findById(cid).orElseThrow(() -> new NoSuchDataException("error type : [no update data]"));
+        articleComment.setContent(request.getContent());
+
+        //update
+        articleCommentRepository.save(articleComment);
+    }
+
 
 }

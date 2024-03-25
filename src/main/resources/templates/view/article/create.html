@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:fragment="content">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-4">Article Info</h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form action="/article/create" method="post">
+                <div class="mb-3">
+                    <label for="title" class="form-label">title</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">content</label>
+                    <textarea class="form-control" id="content" name="content"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="hashtag" class="form-label">hashtag</label>
+                    <textarea class="form-control" id="hashtag" name="hashtag"></textarea>
+                </div>
+                <!--<div class="mb-3" th:if="${article.imageUrls != null}">
+                    <label class="form-label">Images</label>
+                    <div>
+                        <th:block th:each="imageUrl : ${article.imageUrls}">
+                            <img th:src="${imageUrl}" alt="Image" width="200px" height="200px">
+                        </th:block>
+                    </div>
+                </div>-->
+                <a href="/article/list" class="btn btn-outline-secondary">목록</a>
+                <button type="submit" name="createBtn" onclick="return confirm('등록 하시겠습니까?')">등록</button>
+            </form>
+    </div>
+
+    <script th:inline="javascript">
+    </script>
+</div>
+
+</body>
+</html>

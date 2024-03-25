@@ -2,21 +2,24 @@ package com.juchan.board.springboardjpa.api.article.controller;
 
 
 
+import com.juchan.board.springboardjpa.api.article.dto.ArticleRequest;
+import com.juchan.board.springboardjpa.api.article.dto.ArticleUpdateRequest;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleView;
 import com.juchan.board.springboardjpa.api.article.service.ArticleServiceImpl;
 import com.juchan.board.springboardjpa.common.page.PageUtil;
 import com.juchan.board.springboardjpa.common.search.SearchDto;
+import com.juchan.board.springboardjpa.exception.dto.ApiResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -27,7 +30,31 @@ public class ArticleController {
 
     private final ArticleServiceImpl articleService;
 
-    //TODO :  Paging 처리 , 검색 조건 추가(dto,searchForm.html,Querydls)
+    @GetMapping("/create")
+    public String goCreateView(){
+        return "view/article/create";
+    }
+
+    @PostMapping("/create")
+    public String insertByArticle(@Valid ArticleRequest articleRequest){
+        Long createdId = articleService.create(articleRequest);
+        //최초 목록 1페이지 랜딩 (임시)
+        return "redirect:/article/list";
+    }
+
+    @PostMapping("/update")
+    public String updateByArticle(@ModelAttribute @Valid ArticleUpdateRequest articleUpdateRequest){
+        Long updateId = articleService.updateByArticle(articleUpdateRequest);
+        //최초 목록 1페이지 랜딩 (임시)
+        return "redirect:/article/detail/" + updateId;
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteByArticle(@PathVariable Long id){
+        articleService.deleteByArticle(id);
+        return "redirect:/article/list";
+    }
+
     @GetMapping("/list")
     public String getArticleList(Model mv, SearchDto searchDto, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageInfo){
 

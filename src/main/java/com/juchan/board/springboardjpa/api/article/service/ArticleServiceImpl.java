@@ -93,4 +93,19 @@ public class ArticleServiceImpl {
         Optional<Article> testList = articleRepository.findById(id);
         return articleRepository.findById(id).orElseThrow(() -> new NoSuchDataException("error type : [[no data]]"));
     }
+
+
+    //SSR 방식에서 처리할때 사용하는 Update Method
+    public Long updateByArticle(ArticleUpdateRequest articleUpdateRequest){
+
+        //set
+        Article article = articleRepository.findById(articleUpdateRequest.getCommentId()).orElseThrow(() -> new NoSuchDataException("error type : [no update data]"));
+
+        article.setTitle(articleUpdateRequest.getTitle());
+        article.setContent(articleUpdateRequest.getContent());
+        article.setHashtag(articleUpdateRequest.getHashtag());
+
+        //update
+        return articleRepository.save(article).getId();
+    }
 }
