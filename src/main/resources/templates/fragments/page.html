@@ -4,11 +4,12 @@
             <ul class="pagination pagination-base pagination-boxed pagination-square mb-0">
                     <li class="page-item">
                         <th:block th:if="${pageUtil.page} == 1">
+
                         </th:block>
-                        <th:block th:unless="${pageUtil.page} == 1">
+                        <th:block th:unless="${pageUtil.page == 1 || pageUtil.page < 1}">
                             <a class="page-link no-border" th:href="@{/article/list(page=${pageUtil.page} - 2)}">
-                                <span aria-hidden="true">«</span>
-                                <span class="sr-only">Previous</span>
+                                <span aria-hidden="true">Previous</span>
+                                <span class="sr-only"></span>
                             </a>
                         </th:block>
                     </li>
@@ -16,12 +17,12 @@
                         <li class="page-item"><a class="page-link no-border" th:classappend="${pageUtil.nowPage == page} ? 'active'" th:href="@{/article/list(page=${page - 1})}">[[${page}]]</a></li>
                     </th:block>
                     <li class="page-item">
-                            <th:block th:if="${pageUtil.page == pageUtil.totalPage}">
+                            <th:block th:if="${pageUtil.page == pageUtil.totalPage - 1}">
                             </th:block>
-                            <th:block th:unless="${pageUtil.page == pageUtil.totalPage}">
+                            <th:block th:unless="${pageUtil.page == pageUtil.totalPage - 1}">
                                 <a class="page-link no-border" th:href="@{/article/list(page=${pageUtil.page} + 1)}">
-                                    <span aria-hidden="true">»</span>
-                                    <span class="sr-only">Next</span>
+                                    <span aria-hidden="true">Next</span>
+                                    <span class="sr-only"></span>
                                 </a>
                             </th:block>
                     </li>

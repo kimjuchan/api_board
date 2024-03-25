@@ -12,61 +12,62 @@
 
 <body>
 <div class="row">
+    <div class="row">
+        <div class="col-lg-12 card-margin">
+            <div class="card search-form">
+                <div class="card-body p-0">
+                    <form id="search-form">
+                        <div class="row">
+                            <div class="col-12">
+                                <form th:method="get" th:action>
+                                    <div class="row no-gutters">
+                                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                            <select class="form-control border-0" id="searchType" name="type">
+                                                <option th:each="search : ${searchDto.typeList}" th:text="${search.type}" th:if="${searchDto.type eq search.type ? 'selected' : ''}" th:value="${search.name}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-8 col-md-6 col-sm-12 p-0">
+                                            <input type="text" placeholder="검색 내용 입력" class="form-control" id="keyword" name="keyword"><a th:if="${searchDto.keyword != null}" th:value="${searchDto.keyword}"></a>
+                                        </div>
+                                        <div class="col-lg-1 col-md-3 col-sm-12 p-0">
+                                            <button type="submit" class="btn btn-base">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-12">
-        <div class="card card-margin">
+        <div class="card card-margin" style="margin: 1em !important;">
             <div class="card-body">
                 <div class="row search-body">
                     <div class="col-lg-12">
                         <div class="search-result">
-                            <div class="result-header">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <!--조회 목록이 있을 경우 노출-->
-                                        <th:block th:if="${list.getTotalElements() > 0}">
-                                            <div class="records">총 : <b><th:block th:if="${list.getTotalElements() > 0}">[[${list.getTotalElements()}]]</th:block></b> 건</div>
-                                        </th:block>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12 card-margin">
-                                            <div class="card search-form">
-                                                <div class="card-body p-0">
-                                                    <form id="search-form">
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <form th:method="get" th:action>
-                                                                    <div class="row no-gutters">
-                                                                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                                                            <select class="form-control border-0" id="searchType" name="type">
-                                                                                <option th:each="search : ${searchDto.typeList}" th:text="${search.type}" th:if="${searchDto.type eq search.type ? 'selected' : ''}" th:value="${search.name}">
-                                                                                </option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="col-lg-8 col-md-6 col-sm-12 p-0">
-                                                                            <input type="text" placeholder="검색 내용 입력" class="form-control" id="keyword" name="keyword"><a th:if="${searchDto.keyword != null}" th:value="${searchDto.keyword}"></a>
-                                                                        </div>
-                                                                        <div class="col-lg-1 col-md-3 col-sm-12 p-0">
-                                                                            <button type="submit" class="btn btn-base">
-                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <a href="/article/create">등록</a>
-                            </div>
                             <div class="result-body">
+                                <!--조회 목록이 있을 경우 노출-->
+                                <th:block th:if="${list.getTotalElements() > 0}">
+                                    <div class="records">총 : <b><th:block th:if="${list.getTotalElements() > 0}">[[${list.getTotalElements()}]]</th:block></b> 건</div>
+                                </th:block>
                                 <div class="table-responsive">
                                     <th:block th:if="${list != null}">
                                         <table class="table widget-26">
+                                            <tr>
+                                                <th>Img</th>
+                                                <th>제목</th>
+                                                <th>내용</th>
+                                                <th>해시태그#</th>
+                                                <th>등록자</th>
+                                                <th>등록일</th>
+                                            </tr>
                                             <tr th:each="article : ${list.content}">
                                                 <td>
                                                     <div class="widget-26-job-emp-img">
@@ -84,7 +85,7 @@
                                                 <td>
                                                     <div class="widget-26-job-info">
                                                         <p class="type m-0"></p>
-                                                        <p class="text-muted m-0">in <span class="location">[[${article.content}]]</span></p>
+                                                        <p class="text-muted m-0"><span class="location">[[${article.content}]]</span></p>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -118,12 +119,20 @@
                         </div>
                     </div>
                 </div>
-                </div>
-            <!--card_body end-->
             </div>
-        <!--card_margin end-->
+            <!--card_body end-->
         </div>
+        <!--card_margin end-->
     </div>
-    <!--row end-->
+    <div th:replace="fragments/page :: pageFragment"></div>
+</div>
+
+
+<div class="row">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="btn btn-primary me-md-2" role="button" id="write-article" th:href="@{/article/create}">글쓰기</a>
+    </div>
+</div>
+<!--row end-->
 </body>
 </html>

@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/defaultLayout}"
       layout:fragment="content">
 <head>
     <meta charset="UTF-8">
-    <title>detail</title>
+    <title>Article</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-4">Article Info</h1>
+    <h1 class="mt-4">상세 정보</h1>
     <div class="card mb-4">
         <div class="card-body">
             <form th:action="@{/article/update}" method="post">

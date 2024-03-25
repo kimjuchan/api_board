@@ -15,16 +15,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class ArticleServiceImpl {
     private final ArticleRepository articleRepository;
+
     public Long create(ArticleRequest articleRequest){
         //set
         Article article = Article.builder()
@@ -69,17 +73,20 @@ public class ArticleServiceImpl {
 
     // type : entity to dto change
     // api
+    @Transactional(readOnly = true)
     public List<Article> findAll(){
         return articleRepository.findAll();
     }
 
 
     //findAllBySearch
+    @Transactional(readOnly = true)
     public Page<Article> findAllBySearch(SearchDto searchDto,Pageable pageable){
         return articleRepository.search(searchDto,pageable);
     }
 
-    // view
+    // -----------<p>view 화면에 쓰이는 메소드 </p>--------------------
+    @Transactional(readOnly = true)
     public Page<Article> findAll(Pageable pageInfo){
         //default sort 기준 : "id" 사실 여기서 정렬을 할 필요가 있을지는 모르겠지만 나중에 추가로 사용하게 된다면 이렇게 사용한다는정도만... 샘플로
         //Pageable pageable = pageInfo.toPageableWithSort(Sort.by(Sort.Direction.ASC, pageInfo.getSort_type()));
@@ -87,6 +94,7 @@ public class ArticleServiceImpl {
     }
 
     // detail
+    @Transactional(readOnly = true)
     public Article findById(Long id){
         //TODO : Server에서 예외처리 후 해당 error 정보를 화면에 노출 시켜야함
         //test
@@ -95,7 +103,7 @@ public class ArticleServiceImpl {
     }
 
 
-    //SSR 방식에서 처리할때 사용하는 Update Method
+    //update
     public Long updateByArticle(ArticleUpdateRequest articleUpdateRequest){
 
         //set

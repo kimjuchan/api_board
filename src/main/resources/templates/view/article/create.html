@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/defaultLayout}"
       layout:fragment="content">
 <head>
     <meta charset="UTF-8">
-    <title>detail</title>
+    <title>Article</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-4">Article Info</h1>
+    <h1 class="mt-4">등록</h1>
     <div class="card mb-4">
         <div class="card-body">
             <form action="/article/create" method="post">
@@ -33,12 +34,15 @@
                     </div>
                 </div>-->
                 <a href="/article/list" class="btn btn-outline-secondary">목록</a>
-                <button type="submit" name="createBtn" onclick="return confirm('등록 하시겠습니까?')">등록</button>
+                <button class="btn btn-outline-warning" type="submit" name="createBtn"
+                        onclick="return confirm('등록 하시겠습니까?')">등록
+                </button>
             </form>
-    </div>
+        </div>
 
-    <script th:inline="javascript">
-    </script>
+        <script th:inline="javascript">
+        </script>
+    </div>
 </div>
 
 </body>
