@@ -16,7 +16,8 @@ public class P6spyFormatterConfig implements MessageFormattingStrategy {
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
         sql = formatSql(category, sql);
-        return now + "|" + elapsed + "ms|" + category + "|connection " + connectionId + "|" + P6Util.singleLine(prepared) + sql;
+        //+ P6Util.singleLine(prepared)
+        return now + "|" + elapsed + "ms|" + category + "|connection " + connectionId + "|"  + sql;
     }
 
     // Set SQL form

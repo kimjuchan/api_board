@@ -26,7 +26,7 @@ public class ArticleView {
     private LocalDateTime updatedAt;
     private String updateBy;
 
-    private List<ArticleComment> articleComment;
+    //private List<ArticleComment> articleComment;
 
     //change Article to ArticleView
     public static ArticleView entityToArticleVeiw(Article article){
@@ -39,7 +39,7 @@ public class ArticleView {
                     .createBy(article.getCreateBy())
                     .updatedAt(article.getUpdatedAt())
                     .updateBy(article.getUpdateBy())
-                    .articleComment(article.getArticleComments())
+                    //.articleComment(article.getArticleComments())
                     .build();
     }
 

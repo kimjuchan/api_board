@@ -7,7 +7,7 @@ spring:
   jpa:
     hibernate:
       #이제 데이터 넣는 것도 귀찮아.....
-      ddl-auto: update
+      ddl-auto: create-drop
     #show-sql: true
     defer-datasource-initialization: true
     #properties:
@@ -25,7 +25,7 @@ decorator:
     p6spy:
       enable-logging: true
       multiline: true
-      logging: slf4j
+
 
 
     #logging:

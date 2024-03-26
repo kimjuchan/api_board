@@ -2,10 +2,16 @@ package com.juchan.board.springboardjpa.api.article.controller;
 
 
 import com.juchan.board.springboardjpa.api.aop.CreateDataList;
+import com.juchan.board.springboardjpa.api.article.domain.Article;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleRequest;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleResponse;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleUpdateRequest;
 import com.juchan.board.springboardjpa.api.article.service.ArticleServiceImpl;
+import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
+import com.juchan.board.springboardjpa.api.test.Members;
+import com.juchan.board.springboardjpa.api.test.MembersRepository;
+import com.juchan.board.springboardjpa.api.test.Team;
+import com.juchan.board.springboardjpa.api.test.TeamRepository;
 import com.juchan.board.springboardjpa.exception.dto.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

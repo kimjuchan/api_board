@@ -23,7 +23,7 @@ public class ArticleResponse {
     private String hashtag;
 
     //댓글 정보
-    private List<ArticleComment> articleComment = new ArrayList<>();
+    //private List<ArticleComment> articleComment = new ArrayList<>();
 
     //등록, 수정 정보
     private LocalDateTime createAt;
@@ -38,7 +38,7 @@ public class ArticleResponse {
                 .title(article.getTitle())
                 .content(article.getContent())
                 .hashtag(article.getHashtag())
-                .articleComment(article.getArticleComments())
+                //.articleComment(article.getArticleComments())
                 .createAt(article.getCreatedAt())
                 .createBy(article.getCreateBy())
                 .updatedAt(article.getUpdatedAt())

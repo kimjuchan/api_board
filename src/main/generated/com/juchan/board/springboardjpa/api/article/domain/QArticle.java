@@ -36,6 +36,8 @@ public class QArticle extends EntityPathBase<Article> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final ListPath<com.juchan.board.springboardjpa.api.hashtag.domain.TagMapping, com.juchan.board.springboardjpa.api.hashtag.domain.QTagMapping> tagMappings = this.<com.juchan.board.springboardjpa.api.hashtag.domain.TagMapping, com.juchan.board.springboardjpa.api.hashtag.domain.QTagMapping>createList("tagMappings", com.juchan.board.springboardjpa.api.hashtag.domain.TagMapping.class, com.juchan.board.springboardjpa.api.hashtag.domain.QTagMapping.class, PathInits.DIRECT2);
+
     public final StringPath title = createString("title");
 
     //inherited

@@ -2,10 +2,16 @@ package com.juchan.board.springboardjpa.api.article.controller;
 
 
 
+import com.juchan.board.springboardjpa.api.article.domain.Article;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleRequest;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleUpdateRequest;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleView;
 import com.juchan.board.springboardjpa.api.article.service.ArticleServiceImpl;
+import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
+import com.juchan.board.springboardjpa.api.test.Members;
+import com.juchan.board.springboardjpa.api.test.MembersRepository;
+import com.juchan.board.springboardjpa.api.test.Team;
+import com.juchan.board.springboardjpa.api.test.TeamRepository;
 import com.juchan.board.springboardjpa.common.page.PageUtil;
 import com.juchan.board.springboardjpa.common.search.SearchDto;
 import com.juchan.board.springboardjpa.exception.dto.ApiResponse;
@@ -22,6 +28,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/article")
 @RequiredArgsConstructor
@@ -29,6 +37,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class ArticleController {
 
     private final ArticleServiceImpl articleService;
+
+    //test
+
+    private final MembersRepository membersRepository;
+    private final TeamRepository teamRepository;
 
     @GetMapping("/create")
     public String goCreateView(){
@@ -59,6 +72,7 @@ public class ArticleController {
     public String getArticleList(Model mv, SearchDto searchDto, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageInfo){
 
         Page<ArticleView> articleViewList = null;
+        /*Page<Article> article = articleService.findAll(pageInfo);*/
 
         //검색 조건이 DEFAULT : "ALL"일 경우 일반 모든 목록 조회
         if(searchDto.getType().equals("ALL")){
@@ -67,7 +81,7 @@ public class ArticleController {
             //검색 조건 있을경우 목록 조회
             articleViewList = articleService.findAllBySearch(searchDto,pageInfo).map(ArticleView::entityToArticleVeiw);
         }
-
+        /*List<ArticleComment> test = article.getContent().get(0).getArticleComments();*/
         PageUtil page = new PageUtil(pageInfo, (int) articleViewList.getTotalElements(),articleViewList.getTotalPages());
         //page index 값은 0부터 시작이고   해당 현재 요청 page 값은 1부터 시작임.
         mv.addAttribute("list" , articleViewList);

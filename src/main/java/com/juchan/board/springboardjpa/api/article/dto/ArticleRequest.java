@@ -4,6 +4,8 @@ package com.juchan.board.springboardjpa.api.article.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,5 +19,8 @@ public class ArticleRequest {
     private String content;
     @NotBlank(message = "태그 값을 입력해주세요.")
     private String hashtag;
+
+    private List<String> hashtagList;
+
 
 }
