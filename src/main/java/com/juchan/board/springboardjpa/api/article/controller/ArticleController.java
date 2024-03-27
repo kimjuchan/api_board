@@ -72,8 +72,8 @@ public class ArticleController {
     public String getArticleList(Model mv, SearchDto searchDto, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageInfo){
 
         Page<ArticleView> articleViewList = null;
-        /*Page<Article> article = articleService.findAll(pageInfo);*/
 
+        /*List<Article> test = articleService.findAll();*/
         //검색 조건이 DEFAULT : "ALL"일 경우 일반 모든 목록 조회
         if(searchDto.getType().equals("ALL")){
             articleViewList = articleService.findAll(pageInfo).map(ArticleView::entityToArticleVeiw);
@@ -81,7 +81,7 @@ public class ArticleController {
             //검색 조건 있을경우 목록 조회
             articleViewList = articleService.findAllBySearch(searchDto,pageInfo).map(ArticleView::entityToArticleVeiw);
         }
-        /*List<ArticleComment> test = article.getContent().get(0).getArticleComments();*/
+
         PageUtil page = new PageUtil(pageInfo, (int) articleViewList.getTotalElements(),articleViewList.getTotalPages());
         //page index 값은 0부터 시작이고   해당 현재 요청 page 값은 1부터 시작임.
         mv.addAttribute("list" , articleViewList);

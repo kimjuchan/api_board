@@ -3,7 +3,9 @@ package com.juchan.board.springboardjpa.config;
 
 import com.p6spy.engine.common.P6Util;
 import com.p6spy.engine.logging.Category;
+import com.p6spy.engine.spy.P6SpyOptions;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
+import jakarta.annotation.PostConstruct;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,26 +15,26 @@ import java.util.Locale;
 public class P6spyFormatterConfig implements MessageFormattingStrategy {
 
 
+    @PostConstruct
+    public void setLogMessageFormat() {
+        P6SpyOptions.getActiveInstance().setLogMessageFormat(this.getClass().getName());
+    }
+
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
         sql = formatSql(category, sql);
-        //+ P6Util.singleLine(prepared)
-        return now + "|" + elapsed + "ms|" + category + "|connection " + connectionId + "|"  + sql;
+        return String.format("[%s] | %d ms | %s", category, elapsed, formatSql(category, sql));
     }
 
-    // Set SQL form
-    private String formatSql(String category,String sql) {
-        if(sql ==null || sql.trim().equals("")) return sql;
-
-        // Only format Statement, distinguish DDL And DML
-        if (Category.STATEMENT.getName().equals(category)) {
-            String tmpsql = sql.trim().toLowerCase(Locale.ROOT);
-            if(tmpsql.startsWith("create") || tmpsql.startsWith("alter") || tmpsql.startsWith("comment")) {
+    private String formatSql(String category, String sql) {
+        if (sql != null && !sql.trim().isEmpty() && Category.STATEMENT.getName().equals(category)) {
+            String trimmedSQL = sql.trim().toLowerCase(Locale.ROOT);
+            if (trimmedSQL.startsWith("create") || trimmedSQL.startsWith("alter") || trimmedSQL.startsWith("comment")) {
                 sql = FormatStyle.DDL.getFormatter().format(sql);
-            }else {
+            } else {
                 sql = FormatStyle.BASIC.getFormatter().format(sql);
             }
-            sql = "|\nHeFormatSql(P6Spy sql,Hibernate format):"+ sql;
+            return sql;
         }
         return sql;
     }

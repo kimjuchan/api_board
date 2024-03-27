@@ -41,7 +41,6 @@ public class ArticleServiceImpl {
         // 1) article 저장
         // 2) hashTag 저장
         // 3) article 정보 hashtag 정보 -> tagMapping 저장.
-
         //set
         Article article = Article.builder()
                 .title(articleRequest.getTitle())
@@ -56,18 +55,14 @@ public class ArticleServiceImpl {
                     .content(tag)
                     .build();
             hashTagRepository.save(hashtag);
-
             //TagMapping save
             TagMapping tagMapping = TagMapping.builder()
                     .hashTag(hashtag)
                     .article(article)
                     .build();
-
             tagMappingRepository.save(tagMapping);
         }
-
         return article_id;
-
     }
 
     // update
@@ -105,7 +100,12 @@ public class ArticleServiceImpl {
     // api
     @Transactional(readOnly = true)
     public List<Article> findAll(){
-        List<Article> articles = articleRepository.findAll();
+        /*log.info("=======1차 findAll=========");
+        Optional<Article> articles = articleRepository.findById(95L);
+        log.info("=======2차 findAll -> 1차 캐시에서 조회=========");
+        Optional<Article> articles2 = articleRepository.findById(95L);
+        List<ArticleComment> articleComments = articles2.isPresent() ? articles2.get().getArticleComments() : null;
+        */
         return articleRepository.findAll();
     }
 

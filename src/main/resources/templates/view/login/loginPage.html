@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body>
+    <th:block th:if="${errorMsg}">
+        <input type="hidden" id="errorMsg" th:value="${errorMsg}">
+        <script type="text/javascript">
+            alert("로그인 실패 [사유] : " + "[[${errorMsg}]]" + " 입니다");
+        </script>
+    </th:block>
+
+    <div class="container bootstrap snippets bootdey">
+        <div style="height:auto;min-height:300px;" class="jumbotron">
+            <div class="col-md-4">
+                <img class="img-responsive center-block img-user" src="https://bootdey.com/img/Content/Manbrown2.png">
+            </div>
+            <div class="col-md-6 form-content">
+                <form accept-charset="utf-8" method="post" id="UserLoginForm" class="form-signin" th:action="@{/member/login-processing}">
+                    <h1 class="form-signin-heading text-muted">Login</h1>
+                    <input type="text" id="username" autofocus="autofocus" placeholder="LoginId" class="form-control" name="loginId">
+                    <input type="password" id="password" placeholder="Password" class="form-control" name="password">
+                    <button type="submit" class="btn btn-lg btn-info btn-block">
+                        <i class="fa fa-share"></i>
+                        로그인
+                    </button>
+                    <button type="button" class="btn btn-lg btn-info btn-block" th:onclick="register();">
+                        <i class="fa fa-share"></i>
+                        등록
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="container bootstrap snippets bootdey">
+            <footer class="footer">
+                <p>&copy; 2024</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function register(){
+        window.location.href = "/member/sign-up";
+    }
+
+
+
+</script>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<!--해당 Login Form에서만 사용되는 css라 페이지에 적용-->
+<style>
+    body{
+        background:#eee;
+    }
+    .separator {
+        border-right: 1px solid #dfdfe0;
+    }
+    .icon-btn-save {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .input-group {
+        margin-bottom:10px;
+    }
+    .btn-save-label {
+        position: relative;
+        left: -12px;
+        display: inline-block;
+        padding: 6px 12px;
+        background: rgba(0, 0, 0, 0.15);
+        border-radius: 3px 0 0 3px;
+    }
+</style>
+<body>
+<link href="https://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <div class="container bootstrap snippets bootdey">
+
+        <div class="jumbotron text-center" style="min-height:400px;height:auto;">
+            <div class="col-md-10 col-md-offset-2">
+                <form class="form-horizontal" role="form" th:action="@{/member/sign-in}" method="post">
+                    <div class="form-group text-center">
+                        <div class="col-sm-10 reg-icon">
+                            <span class="fa fa-user fa-3x">회원가입 폼</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="loginId" placeholder="loginId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="name" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" name="email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="phone" placeholder="Phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-info">
+                                <span class="glyphicon glyphicon-share-alt"></span>
+                                Register
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

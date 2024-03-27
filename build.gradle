@@ -23,7 +23,6 @@ repositories {
 
 dependencies {
     //default setting
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'junit:junit:4.13.1'
@@ -61,6 +60,10 @@ dependencies {
     //thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'         // Thymeleaf Template
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'   // Thymeleaf layout
+
+    //security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 }
 
 tasks.named('test') {

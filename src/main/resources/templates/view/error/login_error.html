@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}"
+      layout:fragment="content"
+>
+<head>
+    <title>Error 페이지 </title>
+</head>
+
+<body>
+<div class="row">
+    <div class="row">
+        로그인 오류 [Error Msg] : [[${errorMsg}]]
+    </div>
+</div>
+<!--row end-->
+</body>
+</html>
