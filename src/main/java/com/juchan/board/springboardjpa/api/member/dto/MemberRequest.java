@@ -32,6 +32,8 @@ public class MemberRequest {
     private String name;
     private String phone;
 
+    private int failCount;
+
     // request to entity type change
     public Member of(){
         return Member.builder()
@@ -40,6 +42,7 @@ public class MemberRequest {
                 .name(this.name)
                 .phone(this.phone)
                 .email(this.email)
+                .failCount(this.failCount)
                 .build();
     }
 

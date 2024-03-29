@@ -1,5 +1,8 @@
 package com.juchan.board.springboardjpa.config.handler;
 
+import com.juchan.board.springboardjpa.api.member.domain.Member;
+import com.juchan.board.springboardjpa.api.member.domain.MemberDetail;
+import com.juchan.board.springboardjpa.api.member.repository.MemberRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,12 +15,19 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 
 
 @Component
 @Slf4j
 public class LoginSuccessCustomHandler implements AuthenticationSuccessHandler {
+
+    public LoginSuccessCustomHandler(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+    private MemberRepository memberRepository;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         AuthenticationSuccessHandler.super.onAuthenticationSuccess(request, response, chain, authentication);
@@ -28,6 +38,12 @@ public class LoginSuccessCustomHandler implements AuthenticationSuccessHandler {
 
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
+        //Login fail count Reset
+        String loginId = request.getParameter("loginId");
+        MemberDetail member = (MemberDetail) authentication.getPrincipal();
+
+        Member updateMem = memberRepository.findByLoginId(member.getLoginId());
+        updateMem.setFailCount(0);
 
         // IP, 세션 ID
         WebAuthenticationDetails web = (WebAuthenticationDetails) authentication.getDetails();

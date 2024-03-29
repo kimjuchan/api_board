@@ -1,4 +1,4 @@
-package com.juchan.board.springboardjpa.config;
+package com.juchan.board.springboardjpa.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juchan.board.springboardjpa.api.member.dto.MemberRequest;

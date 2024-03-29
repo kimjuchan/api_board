@@ -1,4 +1,4 @@
-package com.juchan.board.springboardjpa.config;
+package com.juchan.board.springboardjpa.config.security;
 
 import com.juchan.board.springboardjpa.api.member.service.MemberDetailService;
 import com.juchan.board.springboardjpa.config.handler.LoginFailCustomHandler;
@@ -36,8 +36,9 @@ public class SecurityConfig {
     //static 이하 동적 파일 경로 Security 비활성화 적용
     @Bean
     public WebSecurityCustomizer configure(){
+        //2024.03.29 favicon.ico 찾지 못하는 이슈료 URL 호출을 2번하게됨 -> 해당 부분 예외처리로 해결.
         return (web) -> web.ignoring()
-                .requestMatchers("/static/**");
+                .requestMatchers("/static/**", "/favicon.ico");
     }
 
     @Bean

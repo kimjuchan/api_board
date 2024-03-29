@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.juchan.board.springboardjpa.common.BaseEntitiy;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -33,13 +34,20 @@ public class Member extends BaseEntitiy {
     @Column(nullable = false)
     private String phone;
 
+    @ColumnDefault("0")
+    @Setter
+    private int failCount;
+
+    @Column(nullable = false)
+    @Setter
+    private StatusType status = StatusType.NORMAL;
+
     //private String imgUrl;
 
     @JsonIgnore
     @Setter
     @Enumerated(EnumType.STRING)
     private RoleType roleType = RoleType.USER;
-
 
 
 }

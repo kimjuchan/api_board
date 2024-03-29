@@ -37,9 +37,10 @@ public class LoginController {
     //로그인 페이지
     @GetMapping("/login")
     public String loginPage(HttpServletRequest request,ModelMap modelMap){
-        HttpSession session = request.getSession();
-        if(session.getAttribute("errorMessage") != null){
-            modelMap.addAttribute("errorMsg", session.getAttribute("errorMessage"));
+
+        //데이터가 안넘어옴 ㅠㅠ
+        if(request.getAttribute("errorMessage") != null){
+            modelMap.addAttribute("errorMsg", request.getAttribute("errorMessage"));
         }
         return "/view/login/loginPage";
     }
@@ -67,13 +68,6 @@ public class LoginController {
         return "redirect:/login";  // 로그인 페이지로 리다이렉트
     }
 
-
-    @GetMapping("/login/error")
-    public String errorPage(HttpServletRequest request, ModelMap modelMap){
-        HttpSession session = request.getSession();
-        modelMap.addAttribute("errorMsg",session.getAttribute("errorMessage"));
-        return "redirect:/member/login";
-    }
 
 
 

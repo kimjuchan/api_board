@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/*
 @Slf4j
 @Aspect
 @Component
@@ -17,3 +18,4 @@ public class SearchDefaultAspect {
 
 
 }
+*/
