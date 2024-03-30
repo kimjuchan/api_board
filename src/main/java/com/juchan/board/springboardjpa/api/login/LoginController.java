@@ -8,11 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,12 +34,12 @@ public class LoginController {
 
     //로그인 페이지
     @GetMapping("/login")
-    public String loginPage(HttpServletRequest request,ModelMap modelMap){
+    public String loginPage(Model model,
+                            @RequestParam(value = "error", required = false)String error,
+                            @RequestParam(value = "exception", required = false)String exception){
 
-        //데이터가 안넘어옴 ㅠㅠ
-        if(request.getAttribute("errorMessage") != null){
-            modelMap.addAttribute("errorMsg", request.getAttribute("errorMessage"));
-        }
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
         return "/view/login/loginPage";
     }
 
@@ -64,11 +62,8 @@ public class LoginController {
                 }
             }
         }
-
-        return "redirect:/login";  // 로그인 페이지로 리다이렉트
+        return "redirect:/login";
     }
-
-
 
 
 }

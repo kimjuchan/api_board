@@ -43,7 +43,6 @@ public class MemberDetailService implements UserDetailsService {
         //pwd encode
         memberRequest.setPassword(passwordEncoder.encode(memberRequest.getPassword()));
         Member member = memberRequest.of();
-        member.setRoleType(RoleType.USER);
         //exception 처리
         Long userId = Optional.of(memberRepository.save(member).getId()).orElseThrow(() -> new RuntimeException("User Create 도중 에러 발생"));
         return userId;
@@ -63,8 +62,8 @@ public class MemberDetailService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-        Member mem = memberRepository.findByLoginId(loginId);
+    public UserDetails loadUserByUsername(String loginId){
+        //Member mem = memberRepository.findByLoginId(loginId);
         Member member = Optional.of(memberRepository.findByLoginId(loginId)).orElseThrow(() -> new UsernameNotFoundException("매칭되는 유저 ID 없음"));
         return new MemberDetail(member);
     }

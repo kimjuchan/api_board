@@ -40,14 +40,14 @@ public class Member extends BaseEntitiy {
 
     @Column(nullable = false)
     @Setter
-    private StatusType status = StatusType.NORMAL;
+    @Enumerated(EnumType.STRING)
+    private StatusType status;
 
     //private String imgUrl;
 
     @JsonIgnore
     @Setter
     @Enumerated(EnumType.STRING)
-    private RoleType roleType = RoleType.USER;
-
+    private RoleType roleType;
 
 }

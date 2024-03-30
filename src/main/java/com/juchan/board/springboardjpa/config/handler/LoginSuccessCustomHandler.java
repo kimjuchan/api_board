@@ -35,32 +35,28 @@ public class LoginSuccessCustomHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
+        log.info("=====[로그인 성공 핸들러 진입]====");
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
-        //Login fail count Reset
+        //Login fail count Reset (관리자 페이지 기능으로 옮겨야함)
+        /*
         String loginId = request.getParameter("loginId");
         MemberDetail member = (MemberDetail) authentication.getPrincipal();
-
         Member updateMem = memberRepository.findByLoginId(member.getLoginId());
         updateMem.setFailCount(0);
+        memberRepository.save(updateMem);
+        */
 
-        // IP, 세션 ID
+        // User info
         WebAuthenticationDetails web = (WebAuthenticationDetails) authentication.getDetails();
-        System.out.println("IP: " + web.getRemoteAddress());
-        System.out.println("Session ID: " + web.getSessionId());
-
-        // 인증 ID
-        System.out.println("ID: " + authentication.getName());
-
-        //login success
-        log.info("##LOGIN INFO##");
-        log.info("##LOGIN INFO##");
-        String url = request.getContextPath();
-        log.info("URI > " + request.getRequestURI());
-        log.info("URL > " + request.getRequestURL());
-        log.info("PATH > " + request.getContextPath());
+        log.info("IP: " + web.getRemoteAddress());
+        log.info("User name : " + authentication.getName());
+        log.info("Session ID: " + web.getSessionId());
+        log.info("request URI > " + request.getRequestURI());
+        log.info("request URL > " + request.getRequestURL());
+        log.info("request PATH > " + request.getContextPath());
 
         response.sendRedirect("/article/list");
+        log.info("=====[로그인 성공 핸들러 진입]====");
     }
 }

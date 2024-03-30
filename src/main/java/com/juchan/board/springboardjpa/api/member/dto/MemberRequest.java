@@ -2,6 +2,8 @@ package com.juchan.board.springboardjpa.api.member.dto;
 
 
 import com.juchan.board.springboardjpa.api.member.domain.Member;
+import com.juchan.board.springboardjpa.api.member.domain.RoleType;
+import com.juchan.board.springboardjpa.api.member.domain.StatusType;
 import com.juchan.board.springboardjpa.common.page.PageUtil;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -33,6 +35,7 @@ public class MemberRequest {
     private String phone;
 
     private int failCount;
+    private String status;
 
     // request to entity type change
     public Member of(){
@@ -42,6 +45,9 @@ public class MemberRequest {
                 .name(this.name)
                 .phone(this.phone)
                 .email(this.email)
+                .status(StatusType.findByStatus(this.status))
+                //default로 적용.
+                .roleType(RoleType.USER)
                 .failCount(this.failCount)
                 .build();
     }

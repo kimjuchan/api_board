@@ -1,3 +1,4 @@
+/*
 package com.juchan.board.springboardjpa.config.filter;
 
 import jakarta.servlet.FilterChain;
@@ -12,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 
+*/
 /**
  * 보통 시큐리티 인증, 인가에 대한 구현은    OncePerRequestFilter , GenericFilterBean을 상속받아 구현.
  * OncePerRequestFilter 상속받으면 더 좋은점
@@ -20,7 +22,8 @@ import java.io.IOException;
  *
  * BcryptPasswordEncoder 순환참조 오류 주의
  * 스프링 5.x 이상부터는 BcryptPasswordEncoder 의무적으로 써야함. -> 해당 Config 파일을 따로 만들어주어 해결.
- */
+ *//*
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -40,3 +43,4 @@ public class JwtAuthenticationCustomFilter extends OncePerRequestFilter {
         log.info("=====JWT authentication custom filter out=======");
     }
 }
+*/

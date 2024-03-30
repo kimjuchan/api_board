@@ -96,6 +96,14 @@
                                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                                     <input type="password" name="password" class="form-control" placeholder="password">
                                 </div>
+                                <!--Login Exception Msg-->
+                                <th:block th:if="${error}">
+                                <div class="input-group mb-3">
+                                    <span>[[${exception}]]</span>
+                                </div>
+                                </th:block>
+                                <!--Login Exception Msg-->
+
                                 <div class="row">
                                     <div class="col-6">
                                         <button type="submit" class="btn btn-primary px-4">로그인</button>
@@ -120,17 +128,10 @@
             </div>
         </div>
     </div>
-
-
-    <th:block th:if="${errorMsg}">
-        <input type="hidden" id="errorMsg" th:value="${errorMsg}">
-        <script type="text/javascript">
-            alert("로그인 실패 [사유] : " + "[[${errorMsg}]]" + " 입니다");
-        </script>
-    </th:block>
-
 </body>
 </html>
+
+
 <script>
 
     //회원가입 view 이동
