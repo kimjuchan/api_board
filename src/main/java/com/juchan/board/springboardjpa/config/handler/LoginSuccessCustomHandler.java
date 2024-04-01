@@ -30,7 +30,6 @@ public class LoginSuccessCustomHandler extends SimpleUrlAuthenticationSuccessHan
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("=====[로그인 성공 핸들러 진입]====");
-
         // User info
         WebAuthenticationDetails web = (WebAuthenticationDetails) authentication.getDetails();
         log.info("IP: " + web.getRemoteAddress());
@@ -39,7 +38,6 @@ public class LoginSuccessCustomHandler extends SimpleUrlAuthenticationSuccessHan
         log.info("Request URI > " + request.getRequestURI());
         log.info("Request URL > " + request.getRequestURL());
         log.info("Request PATH > " + request.getContextPath());
-
         // 로그인 성공시 이동할 페이지
         setDefaultTargetUrl("/article/list");
         // 로그인 성공시 이동할 페이지로 이동

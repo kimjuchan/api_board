@@ -41,7 +41,6 @@ public class ArticleController {
     private final ArticleServiceImpl articleService;
 
     //test
-
     private final MembersRepository membersRepository;
     private final TeamRepository teamRepository;
 

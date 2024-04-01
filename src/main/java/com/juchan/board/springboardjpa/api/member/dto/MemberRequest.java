@@ -47,7 +47,7 @@ public class MemberRequest {
                 .email(this.email)
                 .status(StatusType.findByStatus(this.status))
                 //default로 적용.
-                .roleType(RoleType.USER)
+                .roleType(RoleType.ROLE_USER)
                 .failCount(this.failCount)
                 .build();
     }

@@ -48,9 +48,10 @@ public class MemberAuthenticatorProvider implements AuthenticationProvider {
             throw new BadCredentialsException("[사용자] 사용할 수 없는 계정입니다.");
         }
 
+        //authentication.setAuthenticated(true);
         // 인증이 성공하면 UsernamePasswordAuthenticationToken 객체를 반환한다.
         // 해당 객체는 Authentication 객체로 추후 인증이 끝나고 SecurityContextHolder.getContext() 에 저장된다.
-        return new UsernamePasswordAuthenticationToken(memberPrincipalDetails.getUsername(), memberPrincipalDetails.getPassword(), memberPrincipalDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(memberPrincipalDetails.getUsername(), null, memberPrincipalDetails.getAuthorities());
     }
 
     @Override

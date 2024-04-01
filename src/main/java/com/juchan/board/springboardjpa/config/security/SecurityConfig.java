@@ -37,8 +37,7 @@ public class SecurityConfig {
 
     private final MemberDetailService memberDetailService;
 
-    @Autowired
-    MemberAuthenticatorProvider memberAuthenticatorProvider;
+    private final MemberAuthenticatorProvider memberAuthenticatorProvider;
 
 
     // in memory 방식으로 인증 처리를 진행 하기 위해 기존엔 Override 하여 구현했지만
@@ -63,9 +62,10 @@ public class SecurityConfig {
                 //url 접근 권한 설정.
                 .authorizeHttpRequests(authorizeRequest -> authorizeRequest
                         .requestMatchers("/member/**").permitAll()
-
                         .requestMatchers("/article/**").hasRole("USER")
                         .anyRequest().authenticated()
+                        //.requestMatchers("/article/**").hasRole("USER")
+
                 )
                 //cors 설정
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -92,7 +92,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/member/login")
                         .deleteCookies("JSESSIONID") // 로그아웃 후 쿠키 삭제
                 )
-                .csrf().disable()
+
         ;
 
         return http.build();

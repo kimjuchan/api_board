@@ -29,7 +29,7 @@ public class LoginController {
     @PostMapping("/sign-in")
     public String signin(MemberRequest memberRequest){
         memberDetailService.createUser(memberRequest);
-        return "redirect:/view/login/loginPage";
+        return "redirect:/member/login";
     }
 
     //로그인 페이지
