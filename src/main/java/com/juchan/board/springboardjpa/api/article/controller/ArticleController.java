@@ -2,6 +2,7 @@ package com.juchan.board.springboardjpa.api.article.controller;
 
 
 
+import com.juchan.board.springboardjpa.api.aop.AuthUser;
 import com.juchan.board.springboardjpa.api.article.domain.Article;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleDetailView;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleRequest;
@@ -95,12 +96,15 @@ public class ArticleController {
         mv.addAttribute("list" , articleViewList);
         mv.addAttribute("pageUtil" , page);
         mv.addAttribute("searchDto", searchDto);
-
+ㅇ
         return "view/article/list";
     }
 
     @GetMapping("/detail/{id}")
-    public String getArticleById(@PathVariable("id") Long id, Model mv){
+    public String getArticleById(
+            /*@AuthenticationPrincipal UserDetails memberDetail,*/
+            Principal principal,
+            @PathVariable("id") Long id, Model mv){
         //id 기반 해당 정보 조회
         ArticleDetailView articleView = ArticleDetailView.entityToArticleVeiw(articleService.findById(id));
         mv.addAttribute("article",articleView);

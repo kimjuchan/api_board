@@ -83,8 +83,10 @@
                                         <small class="text-muted" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></small>
                                     </div>
                                 </div>
+
                                 <button class="btn btn-sm btn-outline-warning" th:attr="data-id=${comment.getId()}"  th:id="${article.id}" onclick="editComment(this)">수정</button>
                                 <a th:href="@{'/article/comment/delete/' + ${article.id} + '/comment/' + ${comment.id}}" class="btn btn-sm btn-outline-danger" onclick="return confirm('댓글을 삭제 하시겠습니까?')">삭제</a>
+
                             </div>
                         </div>
                     </div>
