@@ -14,33 +14,33 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/login")
 public class LoginController {
 
     private final MemberDetailService memberDetailService;
 
     //회원가입 등록 폼
-    @GetMapping("/sign-up")
+    @GetMapping("/register")
     public String signup(){
         return "/view/login/sign-up";
     }
 
     //회원가입 등록
-    @PostMapping("/sign-in")
+    @PostMapping("/register")
     public String signin(MemberRequest memberRequest){
         memberDetailService.createUser(memberRequest);
-        return "redirect:/member/login";
+        return "redirect:/login";
     }
 
     //로그인 페이지
-    @GetMapping("/login")
+    @GetMapping()
     public String loginPage(Model model,
                             @RequestParam(value = "error", required = false)String error,
                             @RequestParam(value = "exception", required = false)String exception){
 
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
-        return "/view/login/loginPage";
+        return "/view/login/login-view";
     }
 
 

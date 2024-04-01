@@ -3,22 +3,17 @@ package com.juchan.board.springboardjpa.api.article.controller;
 
 
 import com.juchan.board.springboardjpa.api.aop.AuthUser;
-import com.juchan.board.springboardjpa.api.article.domain.Article;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleDetailView;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleRequest;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleUpdateRequest;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleView;
 import com.juchan.board.springboardjpa.api.article.service.ArticleServiceImpl;
-import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
 import com.juchan.board.springboardjpa.api.member.domain.Member;
 import com.juchan.board.springboardjpa.api.member.domain.MemberDetail;
-import com.juchan.board.springboardjpa.api.test.Members;
 import com.juchan.board.springboardjpa.api.test.MembersRepository;
-import com.juchan.board.springboardjpa.api.test.Team;
 import com.juchan.board.springboardjpa.api.test.TeamRepository;
 import com.juchan.board.springboardjpa.common.page.PageUtil;
 import com.juchan.board.springboardjpa.common.search.SearchDto;
-import com.juchan.board.springboardjpa.exception.dto.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,19 +21,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/article")
@@ -79,7 +69,7 @@ public class ArticleController {
 
     @GetMapping("/list")
     public String getArticleList(
-            @AuthenticationPrincipal MemberDetail userDetails,
+            @AuthUser MemberDetail member,
             Model mv, SearchDto searchDto,
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageInfo){
 
@@ -96,18 +86,19 @@ public class ArticleController {
         mv.addAttribute("list" , articleViewList);
         mv.addAttribute("pageUtil" , page);
         mv.addAttribute("searchDto", searchDto);
-ㅇ
+
         return "view/article/list";
     }
 
     @GetMapping("/detail/{id}")
     public String getArticleById(
-            /*@AuthenticationPrincipal UserDetails memberDetail,*/
-            Principal principal,
+            @AuthUser MemberDetail memberdetail,
             @PathVariable("id") Long id, Model mv){
         //id 기반 해당 정보 조회
         ArticleDetailView articleView = ArticleDetailView.entityToArticleVeiw(articleService.findById(id));
         mv.addAttribute("article",articleView);
+        mv.addAttribute("user",memberdetail);
+
         return "view/article/detail";
     }
 

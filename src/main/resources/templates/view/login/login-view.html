@@ -87,7 +87,7 @@
                         <div class="card-body">
                             <h1>Login</h1>
                             <p class="text-muted">Sign In to your account</p>
-                            <form accept-charset="utf-8" method="post" id="UserLoginForm" class="form-signin" th:action="@{/member/login-processing}">
+                            <form accept-charset="utf-8" method="post" id="UserLoginForm" class="form-signin" th:action="@{/login/login-processing}">
                                 <div class="input-group mb-3">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                     <input type="text"  name="loginId" class="form-control" placeholder="loginId">
@@ -136,7 +136,7 @@
 
     //회원가입 view 이동
     function register(){
-        window.location.href = "/member/sign-up";
+        window.location.href = "/login/register";
     }
 
 </script>

@@ -1,6 +1,7 @@
 package com.juchan.board.springboardjpa.api.member.domain;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -9,11 +10,11 @@ import java.util.List;
 
 public class MemberDetail implements UserDetails {
 
+    public Member member;
+
     public MemberDetail(Member member) {
         this.member = member;
     }
-
-    private Member member;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

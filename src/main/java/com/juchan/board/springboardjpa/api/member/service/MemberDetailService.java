@@ -65,7 +65,6 @@ public class MemberDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String loginId){
-        //Member mem = memberRepository.findByLoginId(loginId);
         Member member = Optional.of(memberRepository.findByLoginId(loginId)).orElseThrow(() -> new UsernameNotFoundException("매칭되는 유저 ID 없음"));
         return new MemberDetail(member);
     }

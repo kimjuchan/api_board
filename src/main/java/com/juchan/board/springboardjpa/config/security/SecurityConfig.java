@@ -62,44 +62,30 @@ public class SecurityConfig {
         http
                 //url 접근 권한 설정.
                 .authorizeHttpRequests(authorizeRequest -> authorizeRequest
-                        .requestMatchers("/member/**").permitAll()
+                        .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/article/**").hasRole("USER")
-                        .requestMatchers("/article/comment/**").hasRole("USER")
-
+                        .requestMatchers("/member/**").hasRole("USER")
                         .anyRequest().authenticated()
-                        //.requestMatchers("/article/**").hasRole("USER")
-
                 )
                 //cors 설정
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                //인증 구현 방식은 2가지
-                /**
-                 * 1) formLogin을 통해서 구현하게되면 기본적으로 UsernamePasswordAuthenticationFilter를 통해서 provider 호출 후 인증 처리
-                 *
-                 * 2) UsernamePasswordAuthenticationFilter를 상속받은 customFilter 구현하여 직접 인증 처리 로직 구현.
-                 *
-                 */
+
                 //자체적으로 선언 시 기본 UsernamePasswordAuthenticationFilter를 통해서 폼 기반 로그인 처리.
                 .formLogin(login -> login
-                        .loginPage("/member/login")	                    // [A] 커스텀 로그인 페이지 지정
-                        .loginProcessingUrl("/member/login-processing")	// [B] submit 받을 url
+                        .loginPage("/login")	                    // [A] 커스텀 로그인 페이지 지정
+                        .loginProcessingUrl("/login/login-processing")	// [B] submit 받을 url
                         .usernameParameter("loginId")	                // [C] submit할 아이디
                         .passwordParameter("password")	                // [D] submit할 비밀번호
                         .successHandler(successHandler)
-                        //이친구를 설정하게 되면 위에 successHandler를 안탐   -> successHandler가 구현하면서 추가 작업을 더 할 수 있어서 선택.
-                        //.defaultSuccessUrl("/main/index")
                         .failureHandler(failureHandler)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/member/login")
+                        .logoutSuccessUrl("/login")
                         .deleteCookies("JSESSIONID") // 로그아웃 후 쿠키 삭제
                 )
                 .csrf().disable()
-
-
         ;
-
         return http.build();
     }
 
