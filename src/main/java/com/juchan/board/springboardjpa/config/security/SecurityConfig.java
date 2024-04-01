@@ -1,11 +1,14 @@
 package com.juchan.board.springboardjpa.config.security;
 
 import com.juchan.board.springboardjpa.api.member.service.MemberDetailService;
+import com.juchan.board.springboardjpa.config.filter.MemberAuthenticatorProvider;
 import com.juchan.board.springboardjpa.config.handler.LoginFailCustomHandler;
 import com.juchan.board.springboardjpa.config.handler.LoginSuccessCustomHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -32,7 +35,19 @@ public class SecurityConfig {
     private final LoginSuccessCustomHandler successHandler;
     private final LoginFailCustomHandler failureHandler;
 
-    
+    private final MemberDetailService memberDetailService;
+
+    @Autowired
+    MemberAuthenticatorProvider memberAuthenticatorProvider;
+
+
+    // in memory 방식으로 인증 처리를 진행 하기 위해 기존엔 Override 하여 구현했지만
+    // Spring Security 5.7.0 버전부터는 AuthenticationManagerBuilder를 직접 생성하여
+    // AuthenticationManager를 생성해야 한다.
+    @Autowired
+    public void configure (AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(memberAuthenticatorProvider);
+    }
     //static 이하 동적 파일 경로 Security 비활성화 적용
     @Bean
     public WebSecurityCustomizer configure(){
@@ -48,6 +63,8 @@ public class SecurityConfig {
                 //url 접근 권한 설정.
                 .authorizeHttpRequests(authorizeRequest -> authorizeRequest
                         .requestMatchers("/member/**").permitAll()
+
+                        .requestMatchers("/article/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 //cors 설정
@@ -73,8 +90,11 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/member/login")
+                        .deleteCookies("JSESSIONID") // 로그아웃 후 쿠키 삭제
                 )
+                .csrf().disable()
         ;
+
         return http.build();
     }
 

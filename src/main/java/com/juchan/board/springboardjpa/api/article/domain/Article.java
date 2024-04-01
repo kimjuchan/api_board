@@ -3,6 +3,7 @@ package com.juchan.board.springboardjpa.api.article.domain;
 
 import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
 import com.juchan.board.springboardjpa.api.hashtag.domain.TagMapping;
+import com.juchan.board.springboardjpa.api.member.domain.Member;
 import com.juchan.board.springboardjpa.common.BaseEntitiy;
 import jakarta.persistence.*;
 import lombok.*;
@@ -47,6 +48,11 @@ public class Article extends BaseEntitiy {
 
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TagMapping> tagMappings = new ArrayList<>();
+
+    /*@ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member; // 유저 정보 (ID)
+*/
 
     //모든 엔티티 컬럼을 비교할 필요없시 pk 기반으로만 확인해도 충분함.
     @Override

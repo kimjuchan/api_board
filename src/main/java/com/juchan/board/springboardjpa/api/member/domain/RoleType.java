@@ -12,4 +12,7 @@ public enum RoleType {
 
     private String name;
 
+
+
+
 }

@@ -2,10 +2,13 @@ package com.juchan.board.springboardjpa.api.member.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.juchan.board.springboardjpa.api.article.domain.Article;
 import com.juchan.board.springboardjpa.common.BaseEntitiy;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -49,5 +52,7 @@ public class Member extends BaseEntitiy {
     @Setter
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
-
+/*
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Article> articleList;*/
 }

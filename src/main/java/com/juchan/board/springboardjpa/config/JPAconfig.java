@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.web.config.PageableHandlerMethodArgumentResolverCustomizer;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
@@ -18,13 +21,12 @@ import java.util.Optional;
 public class JPAconfig {
 
     @Bean
-    public AuditorAware<String> auditorAware(){
-        //실행 순서 test
-        System.out.println("##JPAconfig setting....");
-        return () -> Optional.of("JCkim"); // TODO : 추후 User 생성 후 로그인 정보 담으면 된다.
+    public AuditorAware<String> auditorAware() {
+        return () -> Optional.ofNullable(SecurityContextHolder.getContext())
+                .map(SecurityContext::getAuthentication)
+                .filter(Authentication::isAuthenticated)
+                .map(Authentication::getName);
     }
-
-
     //Page index 값이 0 -> 1부터 시작하게 설정.
    /* @Bean
     public PageableHandlerMethodArgumentResolverCustomizer customize() {

@@ -8,6 +8,7 @@ import com.juchan.board.springboardjpa.api.article.dto.ArticleUpdateRequest;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleView;
 import com.juchan.board.springboardjpa.api.article.service.ArticleServiceImpl;
 import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
+import com.juchan.board.springboardjpa.api.member.domain.MemberDetail;
 import com.juchan.board.springboardjpa.api.test.Members;
 import com.juchan.board.springboardjpa.api.test.MembersRepository;
 import com.juchan.board.springboardjpa.api.test.Team;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +71,9 @@ public class ArticleController {
     }
 
     @GetMapping("/list")
-    public String getArticleList(Model mv, SearchDto searchDto, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageInfo){
+    public String getArticleList(
+                                 Model mv, SearchDto searchDto,
+                                 @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageInfo){
 
         Page<ArticleView> articleViewList = null;
 
