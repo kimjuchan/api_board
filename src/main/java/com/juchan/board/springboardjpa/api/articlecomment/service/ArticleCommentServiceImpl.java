@@ -9,6 +9,7 @@ import com.juchan.board.springboardjpa.api.article.repository.ArticleRepository;
 import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
 import com.juchan.board.springboardjpa.api.articlecomment.dto.ArticleCommentRequest;
 import com.juchan.board.springboardjpa.api.articlecomment.dto.ArticleCommentResponse;
+import com.juchan.board.springboardjpa.api.articlecomment.dto.ArticleCommentUpdateRequest;
 import com.juchan.board.springboardjpa.api.articlecomment.repository.ArticleCommentRepository;
 import com.juchan.board.springboardjpa.exception.NoSuchDataException;
 import lombok.RequiredArgsConstructor;
@@ -88,8 +89,7 @@ public class ArticleCommentServiceImpl {
         articleCommentRepository.save(articleComment);
     }
 
-    public void updateByComment(Long cid, ArticleUpdateRequest request){
-
+    public void updateByComment(Long cid, ArticleCommentUpdateRequest request){
         //set
         ArticleComment articleComment = articleCommentRepository.findById(cid).orElseThrow(() -> new NoSuchDataException("error type : [no update data]"));
         articleComment.setContent(request.getContent());

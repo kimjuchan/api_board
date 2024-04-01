@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -63,6 +64,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequest -> authorizeRequest
                         .requestMatchers("/member/**").permitAll()
                         .requestMatchers("/article/**").hasRole("USER")
+                        .requestMatchers("/article/comment/**").hasRole("USER")
+
                         .anyRequest().authenticated()
                         //.requestMatchers("/article/**").hasRole("USER")
 
@@ -92,6 +95,8 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/member/login")
                         .deleteCookies("JSESSIONID") // 로그아웃 후 쿠키 삭제
                 )
+                .csrf().disable()
+
 
         ;
 

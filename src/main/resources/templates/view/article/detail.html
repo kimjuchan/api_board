@@ -79,11 +79,11 @@
                                     <!--<img class="d-flex mr-3 rounded-circle" th:src="${comment.getImageUrl()}" alt="User image" width="50">-->
                                     <div>
                                         <h5 class="mt-0" th:text="${comment.createBy}"></h5>
-                                        <textarea style="width: 700px;" type="text" th:text="${comment.content}" th:id="'comment-' + ${comment.id}"></textarea>
+                                        <textarea type="text" th:value="${comment.content}"  th:text="${comment.content}" th:id="'comment-' + ${comment.id}"></textarea>
                                         <small class="text-muted" th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></small>
                                     </div>
                                 </div>
-                                <button class="btn btn-sm btn-outline-warning" th:attr="data-id=${comment.getId()}" th:onclick="editComment('[[${article.id}]]')">수정</button>
+                                <button class="btn btn-sm btn-outline-warning" th:attr="data-id=${comment.getId()}"  th:id="${article.id}" onclick="editComment(this)">수정</button>
                                 <a th:href="@{'/article/comment/delete/' + ${article.id} + '/comment/' + ${comment.id}}" class="btn btn-sm btn-outline-danger" onclick="return confirm('댓글을 삭제 하시겠습니까?')">삭제</a>
                             </div>
                         </div>
@@ -94,18 +94,22 @@
     </div>
 
     <script th:inline="javascript">
-        function editComment(id) {
-            const commentId = this.getAttribute('data-id');
+        function editComment(button) {
+            let header = $("meta[name='_csrf_header']").attr('content');
+            let token = $("meta[name='_csrf']").attr('content');
+            const commentId = button.getAttribute('data-id');
+            const article_id = button.getAttribute('id');
             const commentElement = document.getElementById('comment-' + commentId);
-            const commentContent = commentElement.textContent;
-
-            const newContent = prompt('Edit your comment:', commentContent);
+            const newContent = commentElement.value;
+            alert("update content : " + newContent);
             if (newContent) {
-                $.post('/article/comment/update/'+ id +'/comment/' + commentId, {content: newContent}, function (data) {
+                $.post('/article/comment/update/'+ article_id +'/comment/' + commentId,
+                    {content: newContent},
+
+                    function (data) {
                     window.location.href = data;
                 });
             }
-
         }
     </script>
 </div>

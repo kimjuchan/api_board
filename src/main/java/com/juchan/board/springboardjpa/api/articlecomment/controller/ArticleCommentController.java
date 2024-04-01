@@ -3,6 +3,7 @@ package com.juchan.board.springboardjpa.api.articlecomment.controller;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleUpdateRequest;
 import com.juchan.board.springboardjpa.api.articlecomment.dto.ArticleCommentRequest;
 import com.juchan.board.springboardjpa.api.articlecomment.dto.ArticleCommentResponse;
+import com.juchan.board.springboardjpa.api.articlecomment.dto.ArticleCommentUpdateRequest;
 import com.juchan.board.springboardjpa.api.articlecomment.service.ArticleCommentServiceImpl;
 import com.juchan.board.springboardjpa.exception.dto.ApiResponse;
 import jakarta.validation.Valid;
@@ -21,13 +22,15 @@ public class ArticleCommentController {
     private final ArticleCommentServiceImpl articleCommentServicel;
 
     // update
-    @PutMapping("/update/{id}/comment/{cid}")
-    public void updateByComment(@PathVariable Long id, @PathVariable Long cid,@ModelAttribute @Valid ArticleUpdateRequest request){
+    @PostMapping("/update/{id}/comment/{cid}")
+    public String updateByComment(@PathVariable Long id, @PathVariable Long cid, @Valid ArticleCommentUpdateRequest request){
+        //id : Article Id , cid : ArticleComment Id
         articleCommentServicel.updateByComment(cid,request);
+        return "redirect:/article/detail/" + id;
     }
 
     // delete
-    @DeleteMapping("/delete/{id}/comment/{cid}")
+    @PostMapping("/delete/{id}/comment/{cid}")
     public String getDetail( @PathVariable Long id, @PathVariable Long cid){
         //id : Article Id , cid : ArticleComment Id
         articleCommentServicel.deleteByArticle(cid);

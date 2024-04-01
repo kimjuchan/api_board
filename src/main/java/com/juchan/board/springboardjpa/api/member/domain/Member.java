@@ -52,7 +52,8 @@ public class Member extends BaseEntitiy {
     @Setter
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
-/*
+
+    /*
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Article> articleList;*/
 }
