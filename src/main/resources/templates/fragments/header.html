@@ -1,4 +1,4 @@
-<th:block th:fragment="headerFragment">
+<th:block th:fragment="headerFragment" xmlns:sec="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="UTF-8">
         <title>Article</title>
@@ -6,17 +6,14 @@
     <header class="p-3 bg-dark text-white">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <!--<li><a id="home" href="#" class="nav-link px-2 text-secondary">Home</a></li>-->
-                </ul>
-
                 <div class="text-end">
-                    <span id="username" class="text-white me-2">Login UserNm</span>
-                    <a role="button" id="login" class="btn btn-outline-light me-2">Login</a>
-                    <a role="button" id="kakao-login" class="me-2">
+                    <span id="username" class="text-white me-2" sec:authorize="isAuthenticated()" sec:authentication="principal.loginId"></span>
+                    <a role="button" id="login" class="btn btn-outline-light me-2" sec:authorize="!isAuthenticated()">Login</a>
+                    <a role="button" id="register" class="btn btn-outline-light me-2" sec:authorize="!isAuthenticated()">Register</a>
+                    <a role="button" id="kakao-login" class="me-2" sec:authorize="!isAuthenticated()">
                         <img alt="Kakao Login" src="/images/kakao_login_medium.png">
                     </a>
-                    <a role="button" id="logout" class="btn btn-outline-light me-2">Logout</a>
+                    <a role="button" id="logout" class="btn btn-outline-light me-2" sec:authorize="isAuthenticated()">Logout</a>
                 </div>
             </div>
         </div>

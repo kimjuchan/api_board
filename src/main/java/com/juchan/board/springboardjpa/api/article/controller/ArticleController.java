@@ -2,7 +2,7 @@ package com.juchan.board.springboardjpa.api.article.controller;
 
 
 
-import com.juchan.board.springboardjpa.api.aop.AuthUser;
+import com.juchan.board.springboardjpa.api.article.domain.Article;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleDetailView;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleRequest;
 import com.juchan.board.springboardjpa.api.article.dto.ArticleUpdateRequest;
@@ -10,8 +10,7 @@ import com.juchan.board.springboardjpa.api.article.dto.ArticleView;
 import com.juchan.board.springboardjpa.api.article.service.ArticleServiceImpl;
 import com.juchan.board.springboardjpa.api.member.domain.Member;
 import com.juchan.board.springboardjpa.api.member.domain.MemberDetail;
-import com.juchan.board.springboardjpa.api.test.MembersRepository;
-import com.juchan.board.springboardjpa.api.test.TeamRepository;
+
 import com.juchan.board.springboardjpa.common.page.PageUtil;
 import com.juchan.board.springboardjpa.common.search.SearchDto;
 import jakarta.validation.Valid;
@@ -21,14 +20,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 @Controller
 @RequestMapping("/article")
@@ -38,17 +33,16 @@ public class ArticleController {
 
     private final ArticleServiceImpl articleService;
 
-    //test
-    private final MembersRepository membersRepository;
-    private final TeamRepository teamRepository;
-
     @GetMapping("/create")
     public String goCreateView(){
         return "view/article/create";
     }
 
     @PostMapping("/create")
-    public String insertByArticle(@Valid ArticleRequest articleRequest){
+    public String insertByArticle(@AuthenticationPrincipal MemberDetail memberDetail,
+                                  @Valid ArticleRequest articleRequest){
+        //Set 등록 Member정보
+        articleRequest.setMember(memberDetail.member);
         Long createdId = articleService.create(articleRequest);
         //최초 목록 1페이지 랜딩 (임시)
         return "redirect:/article/list";
@@ -69,7 +63,7 @@ public class ArticleController {
 
     @GetMapping("/list")
     public String getArticleList(
-            @AuthUser MemberDetail member,
+            @AuthenticationPrincipal MemberDetail memberDetail,
             Model mv, SearchDto searchDto,
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageInfo){
 
@@ -92,12 +86,13 @@ public class ArticleController {
 
     @GetMapping("/detail/{id}")
     public String getArticleById(
-            @AuthUser MemberDetail memberdetail,
+            @AuthenticationPrincipal MemberDetail memberdetail,
             @PathVariable("id") Long id, Model mv){
         //id 기반 해당 정보 조회
         ArticleDetailView articleView = ArticleDetailView.entityToArticleVeiw(articleService.findById(id));
         mv.addAttribute("article",articleView);
         mv.addAttribute("user",memberdetail);
+
 
         return "view/article/detail";
     }

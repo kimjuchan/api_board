@@ -1,6 +1,6 @@
 package com.juchan.board.springboardjpa.api.main.apicontroller;
 
-import com.juchan.board.springboardjpa.api.aop.CreateDataList;
+import com.juchan.board.springboardjpa.api.aop.annotation.CreateDataList;
 import com.juchan.board.springboardjpa.api.article.service.ArticleServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

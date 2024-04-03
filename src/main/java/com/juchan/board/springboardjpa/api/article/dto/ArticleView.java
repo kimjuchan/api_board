@@ -3,6 +3,7 @@ package com.juchan.board.springboardjpa.api.article.dto;
 
 import com.juchan.board.springboardjpa.api.article.domain.Article;
 import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
+import com.juchan.board.springboardjpa.api.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,8 @@ public class ArticleView {
 
     private List<ArticleComment> articleComment;
 
+    private Member member;
+
     //change Article to ArticleView
     public static ArticleView entityToArticleVeiw(Article article){
         return ArticleView.builder()
@@ -41,6 +44,7 @@ public class ArticleView {
                     .updateBy(article.getUpdateBy())
                     //default null 구성   detail 항목에서만 해당 LAZY 조인 설정을 통해서 데이터를 가져오고 싶음.
                     .articleComment(null)
+                    .member(null)
                     .build();
     }
 }

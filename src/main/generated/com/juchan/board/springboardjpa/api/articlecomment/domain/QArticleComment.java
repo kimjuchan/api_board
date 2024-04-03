@@ -36,6 +36,8 @@ public class QArticleComment extends EntityPathBase<ArticleComment> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final com.juchan.board.springboardjpa.api.member.domain.QMember member;
+
     //inherited
     public final StringPath updateBy = _super.updateBy;
 
@@ -60,7 +62,8 @@ public class QArticleComment extends EntityPathBase<ArticleComment> {
 
     public QArticleComment(Class<? extends ArticleComment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.article = inits.isInitialized("article") ? new com.juchan.board.springboardjpa.api.article.domain.QArticle(forProperty("article")) : null;
+        this.article = inits.isInitialized("article") ? new com.juchan.board.springboardjpa.api.article.domain.QArticle(forProperty("article"), inits.get("article")) : null;
+        this.member = inits.isInitialized("member") ? new com.juchan.board.springboardjpa.api.member.domain.QMember(forProperty("member")) : null;
     }
 
 }

@@ -17,10 +17,10 @@
                         <li class="page-item"><a class="page-link no-border" th:classappend="${pageUtil.nowPage == page} ? 'active'" th:href="@{/article/list(page=${page - 1})}">[[${page}]]</a></li>
                     </th:block>
                     <li class="page-item">
-                            <th:block th:if="${pageUtil.page == pageUtil.totalPage - 1}">
+                            <th:block th:if="${pageUtil.page == pageUtil.totalPage}">
                             </th:block>
-                            <th:block th:unless="${pageUtil.page == pageUtil.totalPage - 1}">
-                                <a class="page-link no-border" th:href="@{/article/list(page=${pageUtil.page} + 1)}">
+                            <th:block th:unless="${pageUtil.page == pageUtil.totalPage}">
+                                <a class="page-link no-border" th:href="@{/article/list(page=${pageUtil.page})}">
                                     <span aria-hidden="true">Next</span>
                                     <span class="sr-only"></span>
                                 </a>

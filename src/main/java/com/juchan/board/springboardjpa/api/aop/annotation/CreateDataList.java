@@ -1,4 +1,4 @@
-package com.juchan.board.springboardjpa.api.aop;
+package com.juchan.board.springboardjpa.api.aop.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

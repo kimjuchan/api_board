@@ -1,4 +1,4 @@
-package com.juchan.board.springboardjpa.api.aop;
+package com.juchan.board.springboardjpa.api.aop.annotation;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
@@ -10,7 +10,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : member")
+//#this == 현재 인증된 principal 객체 값
+@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : memberPrincipalDetails")
 public @interface AuthUser {
-    //custom annotation을 통해서 init data setting 작업.
+
 }

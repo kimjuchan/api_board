@@ -46,6 +46,8 @@ public class ArticleServiceImpl {
                 .title(articleRequest.getTitle())
                 .content(articleRequest.getContent())
                 .hashtag(articleRequest.getHashtag())
+                .member(articleRequest.getMember())
+                .articleComments(null)
                 .build();
         //save
         Long article_id = Optional.of(articleRepository.save(article).getId()).orElseThrow(() -> new RuntimeException("error type : [no create data]"));

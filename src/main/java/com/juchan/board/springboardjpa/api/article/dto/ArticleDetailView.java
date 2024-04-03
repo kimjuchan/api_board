@@ -2,6 +2,7 @@ package com.juchan.board.springboardjpa.api.article.dto;
 
 import com.juchan.board.springboardjpa.api.article.domain.Article;
 import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
+import com.juchan.board.springboardjpa.api.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,8 @@ public class ArticleDetailView {
 
     private List<ArticleComment> articleComment;
 
+    private Member member;
+
     //change Article to ArticleDetailView
     public static ArticleDetailView entityToArticleVeiw(Article article){
         return ArticleDetailView.builder()
@@ -37,6 +40,7 @@ public class ArticleDetailView {
                 .updatedAt(article.getUpdatedAt())
                 .updateBy(article.getUpdateBy())
                 .articleComment(article.getArticleComments())
+                .member(article.getMember())
                 .build();
     }
 }

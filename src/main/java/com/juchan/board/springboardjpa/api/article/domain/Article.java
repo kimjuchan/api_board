@@ -2,6 +2,7 @@ package com.juchan.board.springboardjpa.api.article.domain;
 
 
 import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
+import com.juchan.board.springboardjpa.api.articleimg.doamain.ArticleImg;
 import com.juchan.board.springboardjpa.api.hashtag.domain.TagMapping;
 import com.juchan.board.springboardjpa.api.member.domain.Member;
 import com.juchan.board.springboardjpa.common.BaseEntitiy;
@@ -43,16 +44,18 @@ public class Article extends BaseEntitiy {
     private String hashtag;
 
     //orphanRemoval = true 자식 엔티티의 값이 변경되면서 발생되는 고아 객체 delete 처리
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ArticleComment> articleComments = new ArrayList<>();
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ArticleComment> articleComments;
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TagMapping> tagMappings = new ArrayList<>();
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<TagMapping> tagMappings;
 
-    /*@ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_id")
     private Member member; // 유저 정보 (ID)
-*/
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<ArticleImg> articleImgs;
 
     //모든 엔티티 컬럼을 비교할 필요없시 pk 기반으로만 확인해도 충분함.
     @Override

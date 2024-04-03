@@ -83,6 +83,8 @@ public class ArticleCommentServiceImpl {
                 .id(request.getArticle_id())
                 .content(request.getContent())
                 .article(article)
+                //article과 다르게 comment는 article 작성자외에도 작성할 수 있기 때문에 Login 사용자 정보로 설정해줘야함.
+                .member(request.getMember())
                 .build();
 
         //save

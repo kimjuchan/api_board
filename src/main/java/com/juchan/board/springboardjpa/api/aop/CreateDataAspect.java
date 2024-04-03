@@ -41,13 +41,13 @@ public class CreateDataAspect {
     }
 
     //service
-    @Before("@annotation(com.juchan.board.springboardjpa.api.aop.CreateDataList)")
+    @Before("@annotation(com.juchan.board.springboardjpa.api.aop.annotation.CreateDataList)")
     public void createdDataStart() throws IOException {
         log.info("----------[[Init Create Data start ]]----------");
         createCommonServiceImp.creatArticle("Article");
         createCommonServiceImp.creatArticleComment("Article_comment");
     }
-    @AfterReturning("@annotation(com.juchan.board.springboardjpa.api.aop.CreateDataList)")
+    @AfterReturning("@annotation(com.juchan.board.springboardjpa.api.aop.annotation.CreateDataList)")
     public void createdDataAfter(){
         log.info("----------[[Init Create Data end ]]----------");
     }

@@ -58,7 +58,7 @@ public class PageUtil {
         this.size = pageable.getPageSize() < 0 ? NumberUtils.toInt(DEFAULT_PAGE_SIZE) : pageable.getPageSize();
         this.sort_type = DEFAULT_SORT_TYPE;
         this.startPage = (((int) Math.ceil(((double) (pageable.getPageNumber()+1)/ PER_PAGE_SIZE))) - 1) * PER_PAGE_SIZE + 1;
-        this.endPage = Math.min((startPage + PER_PAGE_SIZE - 1), totalCount);
+        this.endPage = Math.min((this.startPage + PER_PAGE_SIZE - 1), totalPage);
         this.totalCnt = totalCount;
         this.nowPage = pageable.getPageNumber() + 1;
         this.totalPage = totalPage;

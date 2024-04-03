@@ -1,6 +1,7 @@
 package com.juchan.board.springboardjpa.api.articlecomment.domain;
 
 import com.juchan.board.springboardjpa.api.article.domain.Article;
+import com.juchan.board.springboardjpa.api.member.domain.Member;
 import com.juchan.board.springboardjpa.common.BaseEntitiy;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,6 +27,11 @@ public class ArticleComment extends BaseEntitiy {
     //만약 조인컬럼 id(외래키) 매핑 안해주면 article_article_id 새로운 외래키가 생성됨...
     @JoinColumn(name="article_id")
     private Article article;
+
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    //만약 조인컬럼 id(외래키) 매핑 안해주면 article_article_id 새로운 외래키가 생성됨...
+    @JoinColumn(name="member_id")
+    private Member member;
 
     @Setter
     @Column(nullable = false, length = 10000)

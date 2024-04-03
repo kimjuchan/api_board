@@ -1,6 +1,5 @@
 package com.juchan.board.springboardjpa;
 
-import com.juchan.board.springboardjpa.api.aop.CreateDataList;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

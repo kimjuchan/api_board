@@ -3,6 +3,7 @@ package com.juchan.board.springboardjpa.api.member.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.juchan.board.springboardjpa.api.article.domain.Article;
+import com.juchan.board.springboardjpa.api.articlecomment.domain.ArticleComment;
 import com.juchan.board.springboardjpa.common.BaseEntitiy;
 import jakarta.persistence.*;
 import lombok.*;
@@ -53,7 +54,10 @@ public class Member extends BaseEntitiy {
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
-    /*
+  /*  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Article> articleList;
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Article> articleList;*/
+    private List<ArticleComment> articleCommentList;*/
+
 }

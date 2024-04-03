@@ -1,8 +1,10 @@
 package com.juchan.board.springboardjpa.api.article.dto;
 
 
+import com.juchan.board.springboardjpa.api.member.domain.Member;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,5 +24,8 @@ public class ArticleRequest {
 
     private List<String> hashtagList;
 
+    private Member member;
+
+    private List<MultipartFile> files;
 
 }
